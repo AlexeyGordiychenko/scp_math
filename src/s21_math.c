@@ -1,6 +1,5 @@
 #include "s21_math.h"
 
-#include <stdio.h>
 int s21_abs(int x) {
   if (x < 0) {
     x *= -1;
@@ -22,7 +21,7 @@ long double s21_sqrt(double x) {
   if (x > 0) {
     while (1) {
       root = 0.5 * (n + (x / n));
-      if (s21_fabs(root - n) < 0.000000000000001) {
+      if (s21_fabs(root - n) < 0.0000000000000001) {
         break;
       }
       n = root;
