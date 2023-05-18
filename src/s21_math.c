@@ -25,7 +25,7 @@ long double s21_sqrt(double x) {
   if (x > 0) {
     while (1) {
       root = 0.5 * (n + (x / n));
-      if (s21_fabs(root - n) < 0.000001) {
+      if (s21_fabs(root - n) < s21_epsilon) {
         break;
       }
       n = root;
@@ -33,46 +33,66 @@ long double s21_sqrt(double x) {
   } else if (x == 0) {
     root = 0;
   } else {
-    root = s21_NAN;
+    root = s21_nan;
   }
   return root;
 }
 
-// long double s21_pow(double base, double exp) {}
-
-long double s21_sin(double x) {
-  int sign = (x >= 0) ? 1 : -1;
-
-  x = fmod(s21_fabs(x), 2 * my_PI);
-  if (x > my_PI) {
-    x -= my_PI;
-    sign *= -1;
+long double s21_ceil(double x) {
+  int integer_part = (int)x;
+  long double result;
+  if (x > 0 && x > integer_part) {
+    result = (long double)(integer_part + 1);
+  } else if (x < 0 && x < integer_part) {
+    result = (long double)(integer_part - 1);
+  } else {
+    result = (long double)integer_part;
   }
-  if (x > my_PI / 2) x = my_PI - x;
-
-  long double sum = x;
-  double t = x;
-
-  for (int n = 3; s21_fabs(t) > eps; n += 2)
-    sum += t = -t * x * x / n / (n - 1);
-
-  return sum * sign;
+  return result;
 }
 
-long double s21_cos(double x) { return s21_sqrt(1 - pow(s21_sin(x), 2)); }
+long double s21_floor(double x) {
+  int integer_part = (int)x;
+  return (long double)integer_part;
+}
 
-long double s21_tan(double x) { return s21_sin(x) / s21_cos(x); }
+long double s21_log(double x) {
+  long double result = 0.0;
+  if (x > 0.0) {
+    long double guess = x;
+    while (1) {
+      long double error = s21_exp(guess) - x;
 
-int main() {
-  printf("%.6Lf\n", s21_cos(12.355));
-  printf("%.6f\n\n", cos(12.355));
+      if (s21_fabs(error) < s21_epsilon) {
+        result = guess;
+        break;
+      }
 
-  printf("%.6Lf\n", s21_sin(12.355));
-  printf("%.6f\n\n", sin(12.355));
+      long double derivative = s21_exp(guess);
+      guess -= error / derivative;
+    }
+  }
+  return result;
+}
 
-  printf("%.6Lf\n", s21_tan(12.355));
-  printf("%.6f\n\n", tan(12.355));
+long double s21_pow(double base, double exp) {
+  long double result = 1.0;
+  result = s21_exp(exp * s21_log(base));
+  return result;
+}
 
-  printf("%.6f\n", my_PI);
-  printf("%.6f", M_PI);
+long double s21_exp(double x) {
+  long double result = 1.0;
+  if (x == 1.0) {
+    result = 1.0;
+  } else if (x == 0.0) {
+    result = 0.0;
+  } else {
+    long double term = 1.0;
+    for (int i = 1; s21_fabs(term) > s21_epsilon; i++) {
+      term *= x / (long double)i;
+      result += term;
+    }
+  }
+  return result;
 }
