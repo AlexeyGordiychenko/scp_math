@@ -38,22 +38,26 @@ long double s21_sqrt(double x) {
   return root;
 }
 
-long double s21_ceil(double x) {
-  int integer_part = (int)x;
-  long double result;
-  if (x > 0 && x > integer_part) {
-    result = (long double)(integer_part + 1);
-  } else if (x < 0 && x < integer_part) {
-    result = (long double)(integer_part - 1);
-  } else {
-    result = (long double)integer_part;
+// long double s21_pow(double base, double exp) {}
+
+long double s21_sin(double x) {
+  int sign = (x >= 0) ? 1 : -1;
+
+  x = s21_fmod(s21_fabs(x), 2 * my_PI);
+  if (x > my_PI) {
+    x -= my_PI;
+    sign *= -1;
   }
   return result;
 }
 
-long double s21_floor(double x) {
-  int integer_part = (int)x;
-  return (long double)integer_part;
+long double s21_cos(double x) {
+  x = s21_fmod(s21_fabs(x), 2 * my_PI);
+  int sign = 1;
+  if (x > my_PI / 2 && x < 3 * my_PI / 2) {
+    sign = -1;
+  }
+  return sign * s21_sqrt(1 - pow(s21_sin(x), 2));
 }
 
 long double s21_log(double x) {
@@ -63,36 +67,20 @@ long double s21_log(double x) {
     while (1) {
       long double error = s21_exp(guess) - x;
 
-      if (s21_fabs(error) < s21_epsilon) {
-        result = guess;
-        break;
-      }
-
-      long double derivative = s21_exp(guess);
-      guess -= error / derivative;
-    }
-  }
-  return result;
+long double s21_fmod(double x, double y) {
+  return (long double)(x - y * floor(x / y));
 }
 
-long double s21_pow(double base, double exp) {
-  long double result = 1.0;
-  result = s21_exp(exp * s21_log(base));
-  return result;
-}
+int main() {
+  printf("%.6Lf\n", s21_sin(-2738.10869));
+  printf("%.6f\n\n", sin(-2738.10869));
 
-long double s21_exp(double x) {
-  long double result = 1.0;
-  if (x == 1.0) {
-    result = 1.0;
-  } else if (x == 0.0) {
-    result = 0.0;
-  } else {
-    long double term = 1.0;
-    for (int i = 1; s21_fabs(term) > s21_epsilon; i++) {
-      term *= x / (long double)i;
-      result += term;
-    }
-  }
-  return result;
+  printf("%.6Lf\n", s21_cos(67756.23));
+  printf("%.6f\n\n", cos(67756.23));
+
+  printf("%.6Lf\n", s21_tan(982.89155));
+  printf("%.6f\n\n", tan(982.89155));
+
+  printf("%.6Lf\n", s21_fmod(1342.3574355, 34.56787));
+  printf("%.6f\n\n", fmod(1342.3574355, 34.56787));
 }

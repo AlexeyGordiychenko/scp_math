@@ -20,5 +20,8 @@ long double s21_exp(double x);
 // Returns the nearest integer not less than the given value
 long double s21_ceil(double x);
 
-// Returns the nearest integer not greater than the given value
-long double s21_floor(double x);
+// Computes tangent
+long double s21_tan(double x);
+
+// Remainder of the floating-point division operation
+long double s21_fmod(double x, double y);
