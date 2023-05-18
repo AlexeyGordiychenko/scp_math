@@ -2,19 +2,22 @@ CC=gcc
 CFLAGS=-Wall -Werror -Wextra -g -fmax-errors=1
 LDFLAGS=-L. -lcheck -ls21_math -lm -lsubunit
 
-LIB_SRCS=s21_math.c s21_math.h
+LIB_SRCS=s21_math.c
 LIB_OBJS=$(LIB_SRCS:.c=.o)
 LIB=libs21_math.a
 
-all: test
+TEST=test
+TEST_SRCS=test.c
 
-test: unit_tests.c $(LIB)
+all: $(TEST)
+
+$(TEST): $(TEST_SRCS) $(LIB)
 	$(CC) $(CFLAGS) $^ $(LDFLAGS) -o $@ 
 
-$(LIB): $(LIB_SRCS)
-	ar rcs $(LIB) $(LIB_SRCS)
+$(LIB): $(LIB_OBJS)
+	ar rcs $(LIB) $(LIB_OBJS)
 
 clean:
-	rm -f $(LIB_OBJS) $(LIB) test
+	rm -f $(LIB_OBJS) $(LIB) $(TEST)
 
 .PHONY: all clean

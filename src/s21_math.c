@@ -52,7 +52,7 @@ long double s21_cos(double x) {
                                                 (1.0f - (x * x / 182.0f))))))));
 }
 
-double s21_sin(double x) { return s21_cos(x - s21_PI); }
+long double s21_sin(double x) { return s21_cos(x - s21_PI); }
 
 int s21_abs(int x) {
   if (x < 0) {
