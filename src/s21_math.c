@@ -1,58 +1,8 @@
 #include "s21_math.h"
 
-int compare_float(double f1, double f2) {
-  double precision = 0.00000000000000000001;
-  if ((f1 - precision) < f2)
-    return -1;
-  else if ((f1 + precision) > f2)
-    return 1;
-  else
-    return 0;
-}
-
-long double s21_cos(double x) {
-  if (x < 0.0f) x = -x;
-  if (0 <= compare_float(x, s21_PI)) {
-    do {
-      x -= s21_PI;
-    } while (0 <= compare_float(x, s21_PI));
-  }
-
-  if ((0 <= compare_float(x, s21_PI)) && (-1 == compare_float(x, s21_PI))) {
-    x -= s21_PI;
-    return (long double)((-1) *
-                         (1.0f -
-                          (x * x / 2.0f) *
-                              (1.0f -
-                               (x * x / 12.0f) *
-                                   (1.0f -
-                                    (x * x / 30.0f) *
-                                        (1.0f -
-                                         (x * x / 56.0f) *
-                                             (1.0f -
-                                              (x * x / 90.0f) *
-                                                  (1.0f -
-                                                   (x * x / 132.0f) *
-                                                       (1.0f - (x * x /
-                                                                182.0f)))))))));
-  }
-  return (
-      long double)(1.0f -
-                   (x * x / 2.0f) *
-                       (1.0f -
-                        (x * x / 12.0f) *
-                            (1.0f -
-                             (x * x / 30.0f) *
-                                 (1.0f -
-                                  (x * x / 56.0f) *
-                                      (1.0f -
-                                       (x * x / 90.0f) *
-                                           (1.0f -
-                                            (x * x / 132.0f) *
-                                                (1.0f - (x * x / 182.0f))))))));
-}
-
-long double s21_sin(double x) { return s21_cos(x - s21_PI); }
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 int s21_abs(int x) {
   if (x < 0) {
@@ -75,7 +25,7 @@ long double s21_sqrt(double x) {
   if (x > 0) {
     while (1) {
       root = 0.5 * (n + (x / n));
-      if (s21_fabs(root - n) < 0.0000000000000001) {
+      if (s21_fabs(root - n) < 0.000001) {
         break;
       }
       n = root;
@@ -89,3 +39,40 @@ long double s21_sqrt(double x) {
 }
 
 // long double s21_pow(double base, double exp) {}
+
+long double s21_sin(double x) {
+  int sign = (x >= 0) ? 1 : -1;
+
+  x = fmod(s21_fabs(x), 2 * my_PI);
+  if (x > my_PI) {
+    x -= my_PI;
+    sign *= -1;
+  }
+  if (x > my_PI / 2) x = my_PI - x;
+
+  long double sum = x;
+  double t = x;
+
+  for (int n = 3; s21_fabs(t) > eps; n += 2)
+    sum += t = -t * x * x / n / (n - 1);
+
+  return sum * sign;
+}
+
+long double s21_cos(double x) { return s21_sqrt(1 - pow(s21_sin(x), 2)); }
+
+long double s21_tan(double x) { return s21_sin(x) / s21_cos(x); }
+
+int main() {
+  printf("%.6Lf\n", s21_cos(12.355));
+  printf("%.6f\n\n", cos(12.355));
+
+  printf("%.6Lf\n", s21_sin(12.355));
+  printf("%.6f\n\n", sin(12.355));
+
+  printf("%.6Lf\n", s21_tan(12.355));
+  printf("%.6f\n\n", tan(12.355));
+
+  printf("%.6f\n", my_PI);
+  printf("%.6f", M_PI);
+}
