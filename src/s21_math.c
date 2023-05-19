@@ -21,7 +21,7 @@ long double s21_sqrt(double x) {
   if (x > 0) {
     while (1) {
       root = 0.5 * (n + (x / n));
-      if (s21_fabs(root - n) < s21_epsilon) {
+      if (s21_fabs(root - n) < s21_EPSILON) {
         break;
       }
       n = root;
@@ -32,6 +32,28 @@ long double s21_sqrt(double x) {
     root = s21_nan;
   }
   return root;
+}
+
+long double s21_pow(double base, double exp) {
+  long double result = 1.0;
+  result = s21_exp(exp * s21_log(base));
+  return result;
+}
+
+long double s21_exp(double x) {
+  long double result = 1.0;
+  if (x == 1.0) {
+    result = 1.0;
+  } else if (x == 0.0) {
+    result = 0.0;
+  } else {
+    long double term = 1.0;
+    for (int i = 1; s21_fabs(term) > s21_EPSILON; i++) {
+      term *= x / (long double)i;
+      result += term;
+    }
+  }
+  return result;
 }
 
 long double s21_ceil(double x) {
@@ -52,47 +74,6 @@ long double s21_floor(double x) {
   return (long double)integer_part;
 }
 
-long double s21_log(double x) {
-  long double result = 0.0;
-  if (x > 0.0) {
-    long double guess = x;
-    while (1) {
-      long double error = s21_exp(guess) - x;
-
-      if (s21_fabs(error) < s21_epsilon) {
-        result = guess;
-        break;
-      }
-
-      long double derivative = s21_exp(guess);
-      guess -= error / derivative;
-    }
-  }
-  return result;
-}
-
-long double s21_pow(double base, double exp) {
-  long double result = 1.0;
-  result = s21_exp(exp * s21_log(base));
-  return result;
-}
-
-long double s21_exp(double x) {
-  long double result = 1.0;
-  if (x == 1.0) {
-    result = 1.0;
-  } else if (x == 0.0) {
-    result = 0.0;
-  } else {
-    long double term = 1.0;
-    for (int i = 1; s21_fabs(term) > s21_epsilon; i++) {
-      term *= x / (long double)i;
-      result += term;
-    }
-  }
-  return result;
-}
-
 long double s21_sin(double x) {
   int sign = (x >= 0) ? 1 : -1;
 
@@ -106,7 +87,7 @@ long double s21_sin(double x) {
   long double sum = x;
   double t = x;
 
-  for (int n = 3; s21_fabs(t) > s21_epsilon; n += 2)
+  for (int n = 3; s21_fabs(t) > s21_EPSILON; n += 2)
     sum += t = -t * x * x / n / (n - 1);
 
   return sum * sign;
@@ -118,13 +99,37 @@ long double s21_cos(double x) {
   if (x > s21_PI / 2 && x < 3 * s21_PI / 2) {
     sign = -1;
   }
-  return sign * s21_sqrt(1 - pow(s21_sin(x), 2));
+  return sign * s21_sqrt(1 - s21_pow(s21_sin(x), 2));
 }
 
 long double s21_tan(double x) { return s21_sin(x) / s21_cos(x); }
 
 long double s21_fmod(double x, double y) {
   return (long double)(x - y * s21_floor(x / y));
+}
+
+long double s21_asin(double x) {
+  long double res = s21_NAN;
+  int not_found = 1;
+  for (long double i = -s21_PI_2; i <= s21_PI_2 && not_found; i += 0.0000001) {
+    if (equal(x, s21_sin(i)) == 0) {
+      res = i;
+      not_found = 0;
+    }
+  }
+  return res;
+}
+
+long double s21_acos(double x) {
+  long double res = s21_NAN;
+  int not_found = 1;
+  for (long double i = 0; i <= s21_PI && not_found; i += 0.0000001) {
+    if (equal(x, s21_cos(i)) == 0) {
+      res = i;
+      not_found = 0;
+    }
+  }
+  return res;
 }
 
 int convert(double x) {
@@ -142,26 +147,21 @@ int equal(double x, double y) {
   return res;
 }
 
-long double s21_asin(double x) {
-  long double res = s21_nan;
-  int not_found = 1;
-  for (long double i = -s21_PI_2; i <= s21_PI_2 && not_found; i += 0.0000001) {
-    if (equal(x, s21_sin(i)) == 0) {
-      res = i;
-      not_found = 0;
-    }
-  }
-  return res;
-}
+long double s21_log(double x) {
+  long double result = 0.0;
+  if (x > 0.0) {
+    long double guess = x;
+    while (1) {
+      long double error = s21_exp(guess) - x;
 
-long double s21_acos(double x) {
-  long double res = s21_nan;
-  int not_found = 1;
-  for (long double i = 0; i <= s21_PI && not_found; i += 0.0000001) {
-    if (equal(x, s21_cos(i)) == 0) {
-      res = i;
-      not_found = 0;
+      if (s21_fabs(error) < s21_EPSILON) {
+        result = guess;
+        break;
+      }
+
+      long double derivative = s21_exp(guess);
+      guess -= error / derivative;
     }
   }
-  return res;
+  return result;
 }

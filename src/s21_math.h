@@ -1,9 +1,8 @@
 #define s21_nan (0.0 / 0.0)
 #define s21_PI 3.14159265358979323846
-#define s21_PI_2 1.5707963
-#define s21_nan (0.0 / 0.0)
-#define s21_e (long double)2.718281
-#define s21_epsilon (long double)0.000001
+#define s21_PI_2 1.57079632679489661923
+#define s21_E 2.7182818284590452354
+#define s21_EPSILON 1e-6
 
 // Computes absolute value of an integer value
 int s21_abs(int x);
@@ -43,3 +42,9 @@ long double s21_asin(double x);
 
 // Computes arc cosine
 long double s21_acos(double x);
+
+int convert(double x);
+
+int equal(double x, double y);
+
+long double s21_log(double x);
