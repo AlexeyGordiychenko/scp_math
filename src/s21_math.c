@@ -1,9 +1,5 @@
 #include "s21_math.h"
 
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
-
 int s21_abs(int x) {
   if (x < 0) {
     x *= -1;
@@ -95,4 +91,77 @@ long double s21_exp(double x) {
     }
   }
   return result;
+}
+
+long double s21_sin(double x) {
+  int sign = (x >= 0) ? 1 : -1;
+
+  x = s21_fmod(s21_fabs(x), 2 * s21_PI);
+  if (x > s21_PI) {
+    x -= s21_PI;
+    sign *= -1;
+  }
+  if (x > s21_PI / 2) x = s21_PI - x;
+
+  long double sum = x;
+  double t = x;
+
+  for (int n = 3; s21_fabs(t) > s21_epsilon; n += 2)
+    sum += t = -t * x * x / n / (n - 1);
+
+  return sum * sign;
+}
+
+long double s21_cos(double x) {
+  x = s21_fmod(s21_fabs(x), 2 * s21_PI);
+  int sign = 1;
+  if (x > s21_PI / 2 && x < 3 * s21_PI / 2) {
+    sign = -1;
+  }
+  return sign * s21_sqrt(1 - pow(s21_sin(x), 2));
+}
+
+long double s21_tan(double x) { return s21_sin(x) / s21_cos(x); }
+
+long double s21_fmod(double x, double y) {
+  return (long double)(x - y * s21_floor(x / y));
+}
+
+int convert(double x) {
+  int result = x * 100000000;
+  if (result % 10 >= 5)
+    result = result / 10 + 1;
+  else
+    result = result / 10;
+  return result;
+}
+
+int equal(double x, double y) {
+  int res = -1;
+  if (convert(x) == convert(y)) res = 0;
+  return res;
+}
+
+long double s21_asin(double x) {
+  long double res = s21_nan;
+  int not_found = 1;
+  for (long double i = -s21_PI_2; i <= s21_PI_2 && not_found; i += 0.0000001) {
+    if (equal(x, s21_sin(i)) == 0) {
+      res = i;
+      not_found = 0;
+    }
+  }
+  return res;
+}
+
+long double s21_acos(double x) {
+  long double res = s21_nan;
+  int not_found = 1;
+  for (long double i = 0; i <= s21_PI && not_found; i += 0.0000001) {
+    if (equal(x, s21_cos(i)) == 0) {
+      res = i;
+      not_found = 0;
+    }
+  }
+  return res;
 }
