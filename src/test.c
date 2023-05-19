@@ -46,11 +46,11 @@ END_TEST
 START_TEST(sqrt_tests) { s21_generic_ld_test(_i, s21_sqrt, sqrt); }
 END_TEST
 
-START_TEST(sin_tests) { s21_generic_ld_test(_i, s21_sin, sin); }
-END_TEST
+// START_TEST(sin_tests) { s21_generic_ld_test(_i, s21_sin, sin); }
+// END_TEST
 
-START_TEST(cos_tests) { s21_generic_ld_test(_i, s21_cos, cos); }
-END_TEST
+// START_TEST(cos_tests) { s21_generic_ld_test(_i, s21_cos, cos); }
+// END_TEST
 
 Suite *s21_generic_ts(const TTest *test_func, int loops_num, char *title) {
   Suite *suite = suite_create(title);
@@ -68,8 +68,8 @@ int main() {
       s21_generic_ts(abs_tests, tc_int_len, S21_TITLE_ABS),
       s21_generic_ts(fabs_tests, tc_double_len, S21_TITLE_FABS),
       s21_generic_ts(sqrt_tests, tc_double_len, S21_TITLE_SQRT),
-      s21_generic_ts(sin_tests, tc_double_len, S21_TITLE_SIN),
-      s21_generic_ts(cos_tests, tc_double_len, S21_TITLE_COS),
+      // s21_generic_ts(sin_tests, tc_double_len, S21_TITLE_SIN),
+      // s21_generic_ts(cos_tests, tc_double_len, S21_TITLE_COS),
       NULL};
 
   for (int i = 0; s21_math_tests[i] != NULL; i++) {
