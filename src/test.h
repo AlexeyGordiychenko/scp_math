@@ -21,6 +21,7 @@
 #define S21_TITLE_FMOD S21_TITLE "FMOD" S21_CLR_NONE
 #define S21_TITLE_ASIN S21_TITLE "ASIN" S21_CLR_NONE
 #define S21_TITLE_ACOS S21_TITLE "ACOS" S21_CLR_NONE
+#define S21_TITLE_ATAN S21_TITLE "ATAN" S21_CLR_NONE
 #define S21_ASSERT_INT_FAIL                                             \
   "Failed: value = " S21_CLR_GRN "%d" S21_CLR_NONE                      \
   " Result: s21 = " S21_CLR_RED "%d" S21_CLR_NONE " std = " S21_CLR_RED \
@@ -38,9 +39,14 @@ static const int tc_int[] = {-1,         1,      -21,     21,      123456789,
                              -123456789, 000123, -000123, INT_MIN, INT_MAX,
                              0,          -0,     +0};
 static const double tc_double[] = {
-    -21.21, 21.21, -41.4567861, 37.67131, 1,       -1,
-    -0.1,   0.1,   0.2,         -0.2,     0.0,     -0.0,
-    +0.0,   M_E,   M_PI,        s21_NAN,  s21_INF, -s21_INF};
+    -21.21,   21.21,   -41.4567861,
+    36.67132, 1.5,     -2,
+    1,        -1,      -0.1,
+    0.1,      0.2,     -0.2,
+    0.0,      -0.0,    +0.0,
+    M_E,      M_PI,    2 * M_PI,
+    3 * M_PI, M_PI_2,  99999999999999999999.99999999999,
+    s21_NAN,  s21_INF, -s21_INF};
 static const double tc_double_2p[] = {
     1.0,     2.0,      // 0
     0.0,     0.0,      // 1

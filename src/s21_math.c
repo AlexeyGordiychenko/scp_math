@@ -94,12 +94,12 @@ long double s21_tan(double x) { return s21_sin(x) / s21_cos(x); }
 
 long double s21_asin(double x) {
   double t = x;
-  long double sum = s21_nan;
+  long double sum = s21_NAN;
 
   if (s21_fabs(x) < 1) {
     sum = t;
     x *= x;
-    for (int n = 1; s21_fabs(t) > s21_epsilon; n += 2)
+    for (int n = 1; s21_fabs(t) > s21_EPSILON; n += 2)
       sum += (t *= x * n / (n + 1)) / (n + 2);
   } else if (x == 1) {
     sum = s21_PI / 2;
@@ -110,7 +110,7 @@ long double s21_asin(double x) {
 }
 
 long double s21_acos(double x) {
-  long double res = s21_nan;
+  long double res = s21_NAN;
 
   if (s21_fabs(x) <= 1) {
     res = s21_PI / 2 - s21_asin(x);
@@ -120,28 +120,15 @@ long double s21_acos(double x) {
 
 long double s21_atan(double x) { return s21_asin(x / s21_sqrt(1.0 + x * x)); }
 
-int main() {
-  printf("%.6Lf\n", s21_fmod(1342.3574355, 34.56787));
-  printf("%.6f\n\n", fmod(1342.3574355, 34.56787));
-
-  printf("%.6Lf\n", s21_sin(-2738.10869));
-  printf("%.6f\n\n", sin(-2738.10869));
-
-  printf("%.6Lf\n", s21_cos(67756.23));
-  printf("%.6f\n\n", cos(67756.23));
-
-int equal(double x, double y) {
-  int res = -1;
-  if (convert(x) == convert(y)) res = 0;
-  return res;
-}
-
   printf("%.6Lf\n", s21_asin(-0.19802));
   printf("%.6f\n\n", asin(-0.19802));
 
   printf("%.6Lf\n", s21_acos(0.2456));
   printf("%.6f\n\n", acos(0.2456));
 
-  printf("%.6Lf\n", s21_atan(127));
-  printf("%.6f\n", atan(127));
+      long double derivative = s21_exp(guess);
+      guess -= error / derivative;
+    }
+  }
+  return result;
 }

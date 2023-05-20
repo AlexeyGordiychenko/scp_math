@@ -43,6 +43,9 @@ END_TEST
 START_TEST(acos_tests) { s21_generic_ld_1p_test(_i, s21_acos, acos); }
 END_TEST
 
+START_TEST(atan_tests) { s21_generic_ld_1p_test(_i, s21_atan, atan); }
+END_TEST
+
 int main() {
   int failed = 0;
   int tc_int_len = sizeof(tc_int) / sizeof(tc_int[0]);
@@ -62,6 +65,7 @@ int main() {
       s21_generic_ts(fmod_tests, tc_double_2p_len, S21_TITLE_FMOD),
       s21_generic_ts(asin_tests, tc_double_len, S21_TITLE_ASIN),
       s21_generic_ts(acos_tests, tc_double_len, S21_TITLE_ACOS),
+      s21_generic_ts(atan_tests, tc_double_len, S21_TITLE_ATAN),
       NULL};
 
   for (int i = 0; s21_math_tests[i] != NULL; i++) {
