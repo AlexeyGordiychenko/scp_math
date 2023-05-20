@@ -46,3 +46,9 @@ long double s21_acos(double x);
 long double s21_atan(double x);
 
 long double s21_log(double x);
+
+// Checks if x is infinite
+int s21_isinf(double x);
+
+// Checks if x is NaN
+int s21_isnan(double x);

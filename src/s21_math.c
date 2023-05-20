@@ -132,3 +132,7 @@ long double s21_atan(double x) { return s21_asin(x / s21_sqrt(1.0 + x * x)); }
   }
   return result;
 }
+
+int s21_isinf(double x) { return s21_fabs(x) == s21_INF; }
+
+int s21_isnan(double x) { return x != x; }
