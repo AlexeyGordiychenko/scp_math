@@ -34,20 +34,28 @@
   "%f" S21_CLR_NONE " Result: s21 = " S21_CLR_RED "%Lf" S21_CLR_NONE         \
   " std = " S21_CLR_RED "%Lf" S21_CLR_NONE
 
-static const int tc_int[] = {-21, 21, INT_MIN, INT_MAX, 0, -0, +0};
-static const double tc_double[] = {-21.0, 21.0, -41.4567861, 37.67131,
-                                   -0.1,  0.1,  0.0,         -0.0,
-                                   +0.0,  M_E,  M_PI,        s21_NAN};
+static const int tc_int[] = {-1,         1,      -21,     21,      123456789,
+                             -123456789, 000123, -000123, INT_MIN, INT_MAX,
+                             0,          -0,     +0};
+static const double tc_double[] = {
+    -21.21, 21.21, -41.4567861, 37.67131, 1,       -1,
+    -0.1,   0.1,   0.2,         -0.2,     0.0,     -0.0,
+    +0.0,   M_E,   M_PI,        s21_NAN,  s21_INF, -s21_INF};
 static const double tc_double_2p[] = {
     1.0,     2.0,      // 0
     0.0,     0.0,      // 1
-    -1.0,    2.0,      // 2
-    1.0,     -2.0,     // 3
-    -1.0,    -2.0,     // 4
-    -1.0,    M_E,      // 5
-    M_E,     M_E,      // 6
-    M_E,     s21_NAN,  // 7
-    s21_NAN, M_E,      // 8
+    0.0,     1.1,      // 2
+    1.1,     0.0,      // 3
+    -1.0,    2.0,      // 4
+    1.0,     -2.0,     // 5
+    -1.0,    -2.0,     // 6
+    -1.21,   2.42,     // 7
+    1.21,    -2.42,    // 8
+    -1.21,   -2.42,    // 9
+    -1.0,    M_E,      // 10
+    M_E,     M_E,      // 11
+    M_E,     s21_NAN,  // 12
+    s21_NAN, M_E,      // 13
 };
 
 // static const double tc_double[] = {
