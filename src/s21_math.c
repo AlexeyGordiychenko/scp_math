@@ -19,12 +19,16 @@ long double s21_sqrt(double x) {
   long double root;
 
   if (x > 0) {
-    while (1) {
-      root = 0.5 * (n + (x / n));
-      if (s21_fabs(root - n) < s21_EPSILON) {
-        break;
+    if (s21_isinf(x)) {
+      root = s21_INF;
+    } else {
+      while (1) {
+        root = 0.5 * (n + (x / n));
+        if (s21_fabs(root - n) < s21_EPSILON) {
+          break;
+        }
+        n = root;
       }
-      n = root;
     }
   } else if (x == 0) {
     root = 0;
