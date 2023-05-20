@@ -25,6 +25,9 @@ long double s21_ceil(double x);
 // Returns the nearest integer not greater than the given value
 long double s21_floor(double x);
 
+// Remainder of the floating-point division operation
+long double s21_fmod(double x, double y);
+
 // Computes sine
 long double s21_sin(double x);
 
@@ -34,17 +37,11 @@ long double s21_cos(double x);
 // Computes tangent
 long double s21_tan(double x);
 
-// Remainder of the floating-point division operation
-long double s21_fmod(double x, double y);
-
 // Computes arc sine
 long double s21_asin(double x);
 
 // Computes arc cosine
 long double s21_acos(double x);
 
-int convert(double x);
-
-int equal(double x, double y);
-
-long double s21_log(double x);
+// Computes arc tangent
+long double s21_atan(double x);
