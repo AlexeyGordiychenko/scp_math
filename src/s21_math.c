@@ -20,11 +20,11 @@ long double s21_sqrt(double x) {
 
   if (x > 0) {
     if (s21_isinf(x)) {
-      root = s21_INF;
+      root = s21_inf;
     } else {
       while (1) {
         root = 0.5 * (n + (x / n));
-        if (s21_fabs(root - n) < s21_EPSILON) {
+        if (s21_fabs(root - n) < s21_epsilon) {
           break;
         }
         n = root;
