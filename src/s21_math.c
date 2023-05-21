@@ -114,6 +114,12 @@ long double s21_pow(double base, double exp) {
     result = 1.0;
   } else if (exp == 0.0) {
     result = 1.0;
+  } else if (base == +0 && s21_fmod(exp, 2) != 0.0) {
+    result = s21_inf;
+  } else if (base == -0 && s21_fmod(exp, 2) != 0) {
+    result = -s21_inf;
+  } else if (base == 0 && exp < 0.0 && s21_fmod(exp, 2) == 0) {
+    result = +s21_inf;
   } else {
     result = s21_exp(exp * s21_log(base));
   }
@@ -134,12 +140,12 @@ long double s21_exp(double x) {
     long double term = 1.0;
     int n = 1;
     while (s21_fabs(term) >= s21_epsilon) {
-      term *= (long double)(x / n);
+      term *= (long double)((long double)x / n);
       result += term;
       n++;
     }
   }
-  return result;
+  return (double)result;
 }
 
 long double s21_sin(double x) {

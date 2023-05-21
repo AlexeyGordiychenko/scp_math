@@ -3,7 +3,7 @@
 
 #define s21_nan (0.0 / 0.0)
 #define s21_e (long double)2.7182818284
-#define s21_epsilon (long double)0.000000001
+#define s21_epsilon (long double)0.00000000001
 #define s21_inf (1.0 / 0.0)
 #define s21_pi 3.14159265358979323846
 #define s21_pi_2 1.57079632679489661923
