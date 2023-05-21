@@ -1,8 +1,7 @@
 #define s21_nan (0.0 / 0.0)
-#define s21_PI 3.14159265358979323846
-#define s21_PI_2 1.57079632679489661923
-#define s21_E 2.7182818284590452354
-#define s21_EPSILON 1e-6
+#define s21_e (long double)2.7182818284
+#define s21_epsilon (long double)0.000000001
+#define s21_inf (1.0 / 0.0)
 
 // Computes absolute value of an integer value
 int s21_abs(int x);

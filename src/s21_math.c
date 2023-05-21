@@ -40,21 +40,33 @@ long double s21_sqrt(double x) {
 
 long double s21_pow(double base, double exp) {
   long double result = 1.0;
-  result = s21_exp(exp * s21_log(base));
+  if (base == 1) {
+    result = 1.0;
+  } else if (exp == 0.0) {
+    result = 1.0;
+  } else {
+    result = s21_exp(exp * s21_log(base));
+  }
   return result;
 }
 
 long double s21_exp(double x) {
   long double result = 1.0;
   if (x == 1.0) {
-    result = 1.0;
+    result = s21_e;
   } else if (x == 0.0) {
-    result = 0.0;
+    result = 1.0;
+  } else if (x == -s21_inf) {
+    result = +0.0;
+  } else if (x == s21_inf) {
+    result = s21_inf;
   } else {
     long double term = 1.0;
-    for (int i = 1; s21_fabs(term) > s21_EPSILON; i++) {
-      term *= x / (long double)i;
+    int n = 1;
+    while (s21_fabs(term) >= s21_epsilon) {
+      term *= (long double)(x / n);
       result += term;
+      n++;
     }
   }
   return result;
