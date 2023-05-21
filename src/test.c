@@ -104,7 +104,7 @@ void s21_generic_ld_1p_test(int idx, long double (*s21_func)(double),
   } else if (a_isinf || b_isinf) {
     res = a_isinf && b_isinf;
   } else {
-    res = fabsl(a - b) <= s21_TOLERANCE;
+    res = fabsl(a - b) <= s21_tolerance;
   }
   ck_assert_msg(res, S21_ASSERT_LD_1P_FAIL, tc_double[idx], a, b);
 }
@@ -124,7 +124,7 @@ void s21_generic_ld_2p_test(int idx, long double (*s21_func)(double, double),
   } else if (a_isinf || b_isinf) {
     res = a_isinf && b_isinf;
   } else {
-    res = fabsl(a - b) <= s21_TOLERANCE;
+    res = fabsl(a - b) <= s21_tolerance;
   }
   ck_assert_msg(res, S21_ASSERT_LD_2P_FAIL, tc_double_2p[idx * 2],
                 tc_double_2p[idx * 2 + 1], a, b);

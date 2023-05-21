@@ -1,7 +1,13 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 #define s21_nan (0.0 / 0.0)
 #define s21_e (long double)2.7182818284
 #define s21_epsilon (long double)0.000000001
 #define s21_inf (1.0 / 0.0)
+#define s21_pi 3.14159265358979323846
+#define s21_pi_2 1.57079632679489661923
+#define s21_tolerance 1e-6
 
 // Computes absolute value of an integer value
 int s21_abs(int x);
@@ -24,9 +30,6 @@ long double s21_ceil(double x);
 // Returns the nearest integer not greater than the given value
 long double s21_floor(double x);
 
-// Remainder of the floating-point division operation
-long double s21_fmod(double x, double y);
-
 // Computes sine
 long double s21_sin(double x);
 
@@ -35,6 +38,9 @@ long double s21_cos(double x);
 
 // Computes tangent
 long double s21_tan(double x);
+
+// Remainder of the floating-point division operation
+long double s21_fmod(double x, double y);
 
 // Computes arc sine
 long double s21_asin(double x);

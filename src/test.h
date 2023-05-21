@@ -46,7 +46,7 @@ static const double tc_double[] = {
     0.0,      -0.0,    +0.0,
     M_E,      M_PI,    2 * M_PI,
     3 * M_PI, M_PI_2,  99999999999999999999.99999999999,
-    s21_NAN,  s21_INF, -s21_INF};
+    s21_nan,  s21_inf, -s21_inf};
 static const double tc_double_2p[] = {
     1.0,     2.0,      // 0
     0.0,     0.0,      // 1
@@ -60,8 +60,8 @@ static const double tc_double_2p[] = {
     -1.21,   -2.42,    // 9
     -1.0,    M_E,      // 10
     M_E,     M_E,      // 11
-    M_E,     s21_NAN,  // 12
-    s21_NAN, M_E,      // 13
+    M_E,     s21_nan,  // 12
+    s21_nan, M_E,      // 13
 };
 
 // static const double tc_double[] = {
