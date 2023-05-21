@@ -38,6 +38,58 @@ long double s21_sqrt(double x) {
   return root;
 }
 
+long double s21_pow(double base, double exp) {
+  long double result = 1.0;
+  if (base == 1) {
+    result = 1.0;
+  } else if (exp == 0.0) {
+    result = 1.0;
+  } else {
+    result = s21_exp(exp * s21_log(base));
+  }
+  return result;
+}
+
+long double s21_exp(double x) {
+  // long double result = 1.0;
+  // if (x == 1.0) {
+  //   result = 1.0;
+  // } else if (x == 0.0) {
+  //   result = 0.0;
+  // } else {
+  //   long double term = 1.0;
+  //   for (int i = 1; s21_fabs(term) > s21_EPSILON; i++) {
+  //     term *= x / (long double)i;
+  //     result += term;
+  //   }
+  // }
+  // return result;
+  double result = 1.0;
+  if (x == 0) {
+    result = 1;
+  } else if (x == 1.0) {
+    result = s21_E;
+  } else if (s21_isnan(x)) {
+    result = x;
+  } else if (s21_isinf(x)) {
+    result = (x > 0) ? s21_INF : 0.0;
+  } else {
+    long double term = 1.0;
+    long double prev_term = 0;
+    double x_ = (x < -10) ? -x : x;
+    // for (int i = 1; s21_fabs(term) > s21_EPSILON; i++) {
+    for (long double i = 1; s21_fabs(term - prev_term) > 1e-6; i++) {
+      prev_term = term;
+      term *= x_ / i;
+      result += term;
+    }
+    if (x < -10) {
+      result = 1.0 / result;
+    }
+  }
+  return (long double)result;
+}
+
 long double s21_ceil(double x) {
   int integer_part = (int)x;
   long double result;
