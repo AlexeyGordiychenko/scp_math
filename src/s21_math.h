@@ -1,15 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define s21_nan (0.0 / 0.0)
-#define s21_e (long double)2.7182818284
-#define s21_epsilon (long double)0.00000000001
-#define s21_inf (1.0 / 0.0)
-#define s21_pi 3.14159265358979323846
-#define s21_pi_2 1.57079632679489661923
-#define s21_tolerance 1e-6
-#define s21_dmax 1.7976931348623157E+308
-#define s21_dmin -1.7976931348623157E+308
+#define s21_NAN (0.0 / 0.0)
+#define s21_INF (1.0 / 0.0)
+#define s21_TOLERANCE 1e-6
+#define s21_PI 3.14159265358979323846
+#define s21_PI_2 1.57079632679489661923
+#define s21_E 2.7182818284590452354
+#define s21_EPSILON (long double) 1e-11
+#define s21_DMAX 1.7976931348623157E+308
+#define s21_DMIN -1.7976931348623157E+308
 
 // Computes absolute value of an integer value
 int s21_abs(int x);
