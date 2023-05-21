@@ -8,6 +8,8 @@
 #define s21_pi 3.14159265358979323846
 #define s21_pi_2 1.57079632679489661923
 #define s21_tolerance 1e-6
+#define s21_dmax 1.7976931348623157E+308
+#define s21_dmin -1.7976931348623157E+308
 
 // Computes absolute value of an integer value
 int s21_abs(int x);
