@@ -1,5 +1,5 @@
 #include "s21_math.h"
-
+#include <math.h>
 int s21_abs(int x) {
   if (x < 0) {
     x *= -1;
@@ -56,7 +56,7 @@ long double s21_floor(double x) {
   if (s21_isinf(x) || s21_isnan(x)) {
     result = x;
   } else {
-    long double integer_part = (long double) ((long long) x);
+    long double integer_part = (long double)((long long)x);
     if (integer_part == x || x == 0.0 || x < 0.0) {
       result = integer_part;
     } else {
@@ -82,7 +82,7 @@ long double s21_pow(double base, double exp) {
     result = s21_NAN;
   } else if (exp == 0.0) {
     result = 1.0;
-  } else if(base == 0.0) {
+  } else if (base == 0.0) {
     result = 0.0;
   } else if (base == +0 && (s21_fmod(exp, 2) != 0.0)) {
     result = s21_INF;
@@ -104,16 +104,18 @@ long double s21_pow(double base, double exp) {
 
 long double s21_exp(double x) {
   long double result = 1.0;
-  if (x > 709.7 || x < -709.7) {
+  if (x == -s21_INF) {
+    result = 0.0;
+  } else if (x == s21_INF) {
+    result = s21_INF;
+  } else if (x > 709.7 || x < -709.7) {
     result = +s21_INF;
   } else if (x == 1.0) {
     result = s21_E;
   } else if (x == 0.0) {
     result = 1.0;
-  } else if (x == -s21_INF) {
-    result = +0.0;
-  } else if (x == s21_INF) {
-    result = s21_INF;
+  } else if (s21_isnan(x)) {
+    result = s21_NAN;
   } else {
     long double term = 1.0;
     int n = 1;
@@ -123,25 +125,28 @@ long double s21_exp(double x) {
       n++;
     }
   }
+  if (result < 0.0) {
+    result = 0.0;
+  }
   return (double)result;
 }
 
 long double s21_sin(double x) {
-    x = s21_fmod(x, 2.0 * s21_PI); // Wrap x within the range of [-2π, 2π]
+  x = s21_fmod(x, 2.0 * s21_PI);  // Wrap x within the range of [-2π, 2π]
 
-    double result = 0.0;
-    double term = x;
-    double sign = 1.0;
-    double factorial = 1.0;
+  double result = 0.0;
+  double term = x;
+  double sign = 1.0;
+  double factorial = 1.0;
 
-    for (int n = 1; n <= 15; n++) {
-        result += sign * term;
-        term *= x * x / ((2 * n) * (2 * n + 1));
-        sign *= -1.0;
-        factorial *= (2 * n) * (2 * n + 1);
-    }
+  for (int n = 1; n <= 15; n++) {
+    result += sign * term;
+    term *= x * x / ((2 * n) * (2 * n + 1));
+    sign *= -1.0;
+    factorial *= (2 * n) * (2 * n + 1);
+  }
 
-    return result;
+  return result;
 }
 
 long double s21_cos(double x) {
@@ -231,3 +236,9 @@ long double s21_log(double x) {
 int s21_isinf(double x) { return s21_fabs(x) == s21_INF; }
 
 int s21_isnan(double x) { return x != x; }
+
+int main() {
+  printf("%Lf\n", s21_exp(-41.4567861));
+  printf("%lf\n", exp(-41.4567861));
+  return 0;
+}
