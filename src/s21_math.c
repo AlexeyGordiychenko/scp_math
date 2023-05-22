@@ -20,11 +20,11 @@ long double s21_sqrt(double x) {
 
   if (x > 0) {
     if (s21_isinf(x)) {
-      root = s21_inf;
+      root = s21_INF;
     } else {
       while (1) {
         root = 0.5 * (n + (x / n));
-        if (s21_fabs(root - n) < s21_epsilon) {
+        if (s21_fabs(root - n) < s21_EPSILON) {
           break;
         }
         n = root;
@@ -33,7 +33,7 @@ long double s21_sqrt(double x) {
   } else if (x == 0) {
     root = 0;
   } else {
-    root = s21_nan;
+    root = s21_NAN;
   }
   return root;
 }
@@ -120,75 +120,29 @@ long double s21_exp(double x) {
   return (double)result;
 }
 
-long double s21_pow(double base, double exp) {
-  long double result = 1.0;
-  if (base == 1) {
-    result = 1.0;
-  } else if (exp == 0.0) {
-    result = 1.0;
-  } else if (base == +0 && s21_fmod(exp, 2) != 0.0) {
-    result = s21_inf;
-  } else if (base == -0 && s21_fmod(exp, 2) != 0) {
-    result = -s21_inf;
-  } else if (base == 0 && exp < 0.0 && s21_fmod(exp, 2) == 0) {
-    result = +s21_inf;
-  } else if (base >= s21_dmax) {
-    result = -0.0;
-  } else if (base <= s21_dmin) {
-    result = -0.0;
-  } else {
-    result = s21_exp(exp * s21_log(base));
-  }
-  return result;
-}
-
-long double s21_exp(double x) {
-  long double result = 1.0;
-  if (x > 709.7 || x < -709.7) {
-    result = +s21_inf;
-  } else if (x == 1.0) {
-    result = s21_e;
-  } else if (x == 0.0) {
-    result = 1.0;
-  } else if (x == -s21_inf) {
-    result = +0.0;
-  } else if (x == s21_inf) {
-    result = s21_inf;
-  } else {
-    long double term = 1.0;
-    int n = 1;
-    while (s21_fabs(term) >= s21_epsilon) {
-      term *= (long double)((long double)x / n);
-      result += term;
-      n++;
-    }
-  }
-  return (double)result;
-}
-
 long double s21_sin(double x) {
   int sign = (x >= 0) ? 1 : -1;
 
-  x = s21_fmod(s21_fabs(x), 2 * s21_pi);
-  if (x > s21_pi) {
-    x -= s21_pi;
+  x = s21_fmod(s21_fabs(x), 2 * s21_PI);
+  if (x > s21_PI) {
+    x -= s21_PI;
     sign *= -1;
   }
-  if (x > s21_pi / 2) x = s21_pi - x;
+  if (x > s21_PI / 2) x = s21_PI - x;
 
   long double sum = x;
   double t = x;
 
-  for (int n = 3; s21_fabs(t) > s21_epsilon; n += 2)
+  for (int n = 3; s21_fabs(t) > s21_EPSILON; n += 2)
     sum += t = -t * x * x / n / (n - 1);
 
   return sum * sign;
 }
 
 long double s21_cos(double x) {
-  x = s21_fmod(s21_fabs(x), 2 * s21_pi);
+  x = s21_fmod(s21_fabs(x), 2 * s21_PI);
   int sign = 1;
-  if (x > s21_pi / 2 && x < 3 * s21_pi / 2) {
+  if (x > s21_PI / 2 && x < 3 * s21_PI / 2) {
     sign = -1;
   }
   return sign * s21_sqrt(1 - s21_pow(s21_sin(x), 2));
@@ -208,26 +162,26 @@ long double s21_fmod(double x, double y) {
 
 long double s21_asin(double x) {
   double t = x;
-  long double sum = s21_nan;
+  long double sum = s21_NAN;
 
   if (s21_fabs(x) < 1) {
     sum = t;
     x *= x;
-    for (int n = 1; s21_fabs(t) > s21_epsilon; n += 2)
+    for (int n = 1; s21_fabs(t) > s21_EPSILON; n += 2)
       sum += (t *= x * n / (n + 1)) / (n + 2);
   } else if (x == 1) {
-    sum = s21_pi / 2;
+    sum = s21_PI / 2;
   } else if (x == -1) {
-    sum = -s21_pi / 2;
+    sum = -s21_PI / 2;
   }
   return sum;
 }
 
 long double s21_acos(double x) {
-  long double res = s21_nan;
+  long double res = s21_NAN;
 
   if (s21_fabs(x) <= 1) {
-    res = s21_pi / 2 - s21_asin(x);
+    res = s21_PI / 2 - s21_asin(x);
   }
   return res;
 }
@@ -257,6 +211,6 @@ long double s21_log(double x) {
   return result;
 }
 
-int s21_isinf(double x) { return s21_fabs(x) == s21_inf; }
+int s21_isinf(double x) { return s21_fabs(x) == s21_INF; }
 
 int s21_isnan(double x) { return x != x; }
