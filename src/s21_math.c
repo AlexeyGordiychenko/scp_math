@@ -126,10 +126,6 @@ long double s21_exp(double x) {
   return (double)result;
 }
 
-long double s21_fmod(double x, double y) {
-  return (long double)(x - y * s21_floor(x / y));
-}
-
 long double s21_sin(double x) {
     x = s21_fmod(x, 2.0 * s21_PI); // Wrap x within the range of [-2π, 2π]
 
@@ -192,10 +188,22 @@ long double s21_acos(double x) {
   if (s21_fabs(x) <= 1) {
     res = s21_PI / 2 - s21_asin(x);
   }
-  return sum;
+  return res;
 }
 
-long double s21_atan(double x) { return s21_asin(x / s21_sqrt(1.0 + x * x)); }
+long double s21_atan(double x) { 
+  long double result = 0;
+  if(x == -s21_INF){
+    result = -s21_PI / 2;
+  }
+  else if(x == s21_INF){
+    result = s21_PI / 2;
+  }
+  else{
+    result = s21_asin(x / s21_sqrt(1.0 + x * x)); 
+  }
+  return result;
+  }
 
 long double s21_log(double x) {
   long double result = 0.0;
@@ -219,8 +227,6 @@ long double s21_log(double x) {
   }
   return result;
 }
-
-long double s21_atan(double x) { return s21_asin(x / s21_sqrt(1.0 + x * x)); }
 
 int s21_isinf(double x) { return s21_fabs(x) == s21_INF; }
 
