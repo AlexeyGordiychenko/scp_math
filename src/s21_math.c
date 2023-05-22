@@ -52,8 +52,26 @@ long double s21_ceil(double x) {
 }
 
 long double s21_floor(double x) {
-  int integer_part = (int)x;
-  return (long double)integer_part;
+  long double result;
+  if (s21_isinf(x) || s21_isnan(x)) {
+    result = x;
+  } else {
+    long double integer_part = (long double) ((long long) x);
+    if (integer_part == x || x == 0.0 || x < 0.0) {
+      result = integer_part;
+    } else {
+      long double rounded_down = integer_part;
+      long double rounded_up = rounded_down + 1.0;
+
+      long double decimal_part = x - integer_part;
+      if (decimal_part < 0.5) {
+        result = rounded_down;
+      } else {
+        result = rounded_up;
+      }
+    }
+  }
+  return result;
 }
 
 long double s21_pow(double base, double exp) {
@@ -179,7 +197,13 @@ long double s21_cos(double x) {
 long double s21_tan(double x) { return s21_sin(x) / s21_cos(x); }
 
 long double s21_fmod(double x, double y) {
-  return (long double)(x - y * s21_floor(x / y));
+  long double result;
+  if (y == 0.0) {
+    result = s21_nan;
+  } else {
+    result = x - (y * s21_floor(x / y));
+  }
+  return result;
 }
 
 long double s21_asin(double x) {
