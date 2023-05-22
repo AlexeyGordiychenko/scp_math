@@ -121,22 +121,21 @@ long double s21_exp(double x) {
 }
 
 long double s21_sin(double x) {
-  int sign = (x >= 0) ? 1 : -1;
+    x = s21_fmod(x, 2.0 * s21_PI); // Wrap x within the range of [-2π, 2π]
 
-  x = s21_fmod(s21_fabs(x), 2 * s21_PI);
-  if (x > s21_PI) {
-    x -= s21_PI;
-    sign *= -1;
-  }
-  if (x > s21_PI / 2) x = s21_PI - x;
+    double result = 0.0;
+    double term = x;
+    double sign = 1.0;
+    double factorial = 1.0;
 
-  long double sum = x;
-  double t = x;
+    for (int n = 1; n <= 15; n++) {
+        result += sign * term;
+        term *= x * x / ((2 * n) * (2 * n + 1));
+        sign *= -1.0;
+        factorial *= (2 * n) * (2 * n + 1);
+    }
 
-  for (int n = 3; s21_fabs(t) > s21_EPSILON; n += 2)
-    sum += t = -t * x * x / n / (n - 1);
-
-  return sum * sign;
+    return result;
 }
 
 long double s21_cos(double x) {
