@@ -153,7 +153,7 @@ long double s21_tan(double x) { return s21_sin(x) / s21_cos(x); }
 long double s21_fmod(double x, double y) {
   long double result;
   if (y == 0.0) {
-    result = s21_nan;
+    result = s21_NAN;
   } else {
     result = x - (y * s21_floor(x / y));
   }
