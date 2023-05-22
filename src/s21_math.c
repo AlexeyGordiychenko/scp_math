@@ -82,16 +82,16 @@ long double s21_pow(double base, double exp) {
     result = s21_NAN;
   } else if (exp == 0.0) {
     result = 1.0;
-  } else if (base == +0 && s21_fmod(exp, 2) != 0.0) {
+  } else if(base == 0.0) {
+    result = 0.0;
+  } else if (base == +0 && (s21_fmod(exp, 2) != 0.0)) {
     result = s21_INF;
   } else if (base == -0 && s21_fmod(exp, 2) != 0) {
     result = -s21_INF;
   } else if (base == 0 && exp < 0.0 && s21_fmod(exp, 2) == 0) {
     result = +s21_INF;
-  } else if (base < 0.0 && s21_fmod(exp, 10) == 0) {
+  } else if (base < 0.0 && (long long)exp != exp) {
     result = -s21_NAN;
-  } else if(base == 0.0) {
-    result = 0.0;
   } else if (base >= s21_DMAX) {
     result = -0.0;
   } else if (base <= s21_DMIN) {
@@ -196,7 +196,7 @@ long double s21_atan(double x) { return s21_asin(x / s21_sqrt(1.0 + x * x)); }
 long double s21_log(double x) {
   long double result = 0.0;
   if (x > 0.0) {
-    if (x < 2.22507e-308) {
+    if (!s21_isinf(x)) {
       long double guess = x;
       while (1) {
         long double error = s21_exp(guess) - x;
@@ -210,7 +210,7 @@ long double s21_log(double x) {
         guess -= error / derivative;
       }
     } else {
-      result = -s21_INF;
+      result = s21_INF;
     }
   }
   return result;
