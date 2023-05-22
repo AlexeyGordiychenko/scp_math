@@ -1,5 +1,5 @@
 #include "s21_math.h"
-#include <math.h>
+
 int s21_abs(int x) {
   if (x < 0) {
     x *= -1;
@@ -236,9 +236,3 @@ long double s21_log(double x) {
 int s21_isinf(double x) { return s21_fabs(x) == s21_INF; }
 
 int s21_isnan(double x) { return x != x; }
-
-int main() {
-  printf("%Lf\n", s21_exp(-41.4567861));
-  printf("%lf\n", exp(-41.4567861));
-  return 0;
-}
