@@ -78,6 +78,8 @@ long double s21_pow(double base, double exp) {
   long double result = 1.0;
   if (base == 1) {
     result = 1.0;
+  } else if (s21_isnan(base)) {
+    result = s21_NAN;
   } else if (exp == 0.0) {
     result = 1.0;
   } else if (base == +0 && s21_fmod(exp, 2) != 0.0) {
@@ -86,6 +88,10 @@ long double s21_pow(double base, double exp) {
     result = -s21_INF;
   } else if (base == 0 && exp < 0.0 && s21_fmod(exp, 2) == 0) {
     result = +s21_INF;
+  } else if (base < 0.0 && s21_fmod(exp, 10) == 0) {
+    result = -s21_NAN;
+  } else if(base == 0.0) {
+    result = 0.0;
   } else if (base >= s21_DMAX) {
     result = -0.0;
   } else if (base <= s21_DMIN) {
