@@ -41,9 +41,17 @@ long double s21_sqrt(double x) {
 long double s21_ceil(double x) {
   long long integer_part = (long long)x;
   long double result;
-  if (x > 0 && x > integer_part && integer_part >= 0) {
+  if (x == s21_INF) {
+    result = s21_INF;
+  } else if (x == -s21_INF) {
+    result = -s21_INF;
+  } else if (x == 0) {
+    result = 0;
+  } else if (x == -0) {
+    result = -0;
+  } else if (x > 0 && x > integer_part && integer_part >= 0) {
     result = (long double)(integer_part + 1);
-  } else if (x < 0 && x < integer_part) {
+  } else if (x < 0 && x < integer_part && x - integer_part >= 1) {
     result = (long double)integer_part;
   } else {
     result = x;
