@@ -163,7 +163,7 @@ long double s21_exp(double x) {
   } else {
     long double term = 1.0;
     int n = 1;
-    while (s21_fabs(term) >= s21_EPSILON && result > 0.0 && result < s21_DMAX) {
+    while (s21_fabs(term) >= s21_EPSILON && result <= 100 && result < s21_DMAX) {
       term *= (long double)((long double)x / n);
       result += term;
       n++;
