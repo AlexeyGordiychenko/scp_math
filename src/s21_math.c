@@ -204,9 +204,6 @@ long double s21_sin(double x) {
 
 long double s21_cos(double x) {
   int sign = 1.0;
-  if(x < 0){
-    sign = -1.0;
-  }
   x = s21_fmod(x, 2.0 * s21_PI);
   if (x > s21_PI / 2 && x < 3 * s21_PI / 2) {
     sign = -1.0;
