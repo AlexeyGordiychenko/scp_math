@@ -39,12 +39,15 @@ long double s21_sqrt(double x) {
 }
 
 long double s21_ceil(double x) {
-  int integer_part = (int)x;
+  printf("%lf\n", x);
+  long long integer_part = (long long)x;
   long double result;
-  if (x > 0 && x > integer_part) {
+  if (x > 0 && x > integer_part && integer_part > 0) {
     result = (long double)(integer_part + 1);
-  } else {
+  } else if (x < 0 && x < integer_part) {
     result = (long double)integer_part;
+  } else {
+    result = x;
   }
   return result;
 }
