@@ -27,13 +27,13 @@
   " Result: s21 = " S21_CLR_RED "%d" S21_CLR_NONE " std = " S21_CLR_RED \
   "%d" S21_CLR_NONE
 #define S21_ASSERT_LD_1P_FAIL                                            \
-  "Failed: value = " S21_CLR_GRN "%f" S21_CLR_NONE                       \
-  " Result: s21 = " S21_CLR_RED "%Lf" S21_CLR_NONE " std = " S21_CLR_RED \
-  "%Lf" S21_CLR_NONE
+  "Failed: value = " S21_CLR_GRN "%e" S21_CLR_NONE                       \
+  " Result: s21 = " S21_CLR_RED "%Le" S21_CLR_NONE " std = " S21_CLR_RED \
+  "%Le" S21_CLR_NONE
 #define S21_ASSERT_LD_2P_FAIL                                                \
-  "Failed: value1 = " S21_CLR_GRN "%f" S21_CLR_NONE " value2 = " S21_CLR_GRN \
-  "%f" S21_CLR_NONE " Result: s21 = " S21_CLR_RED "%Lf" S21_CLR_NONE         \
-  " std = " S21_CLR_RED "%Lf" S21_CLR_NONE
+  "Failed: value1 = " S21_CLR_GRN "%e" S21_CLR_NONE " value2 = " S21_CLR_GRN \
+  "%e" S21_CLR_NONE " Result: s21 = " S21_CLR_RED "%Le" S21_CLR_NONE         \
+  " std = " S21_CLR_RED "%Le" S21_CLR_NONE
 
 static const int tc_int[] = {-1,         1,      -21,     21,      123456789,
                              -123456789, 000123, -000123, INT_MIN, INT_MAX,
