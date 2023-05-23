@@ -214,11 +214,19 @@ long double s21_cos(double x) {
 long double s21_tan(double x) { return s21_sin(x) / s21_cos(x); }
 
 long double s21_fmod(double x, double y) {
-  long double result;
-  if (y == 0.0) {
+  long double result = 0;
+  if(isnan(x) || isnan(y) || x == s21_INF || y == 0){
     result = s21_NAN;
-  } else {
-    result = x - (y * s21_floor(x / y));
+  } 
+  else if (x == 0 && y != 0 && !isnan(y)){
+    result = 0;
+  }
+  else if(x != s21_INF && x != -s21_INF && (y == s21_INF || y == -s21_INF)){
+    result = x;
+  }
+  else{
+    long long int q = x / y;
+    result = x - q * y;
   }
   return result;
 }
