@@ -51,7 +51,7 @@ long double s21_ceil(double x) {
     result = -0;
   } else if (x > 0 && x > integer_part && integer_part >= 0) {
     result = (long double)(integer_part + 1);
-  } else if (x < 0 && x < integer_part && integer_part - x<= 1) {
+  } else if (x < 0 && x < integer_part && integer_part - x <= 1) {
     result = (long double)integer_part;
   } else {
     result = x;
@@ -61,21 +61,27 @@ long double s21_ceil(double x) {
 
 long double s21_floor(double x) {
   long double result;
-  if (s21_isinf(x) || s21_isnan(x)) {
+  if (x == s21_INF || s21_isnan(x)) {
     result = x;
+  } else if (x == -s21_INF) {
+    result = -s21_INF;
+  } else if (x == 0.0) {
+    result = 0.0;
+  } else if (x == -0.0) {
+    result = -0.0;
   } else {
     long double integer_part = (long double)((long long)x);
-    if (integer_part == x || x == 0.0 || x < 0.0) {
-      result = integer_part;
+    if (integer_part == x || x < 0.0) {
+      result = integer_part - 1;
     } else {
       long double rounded_down = integer_part;
       long double rounded_up = rounded_down + 1.0;
 
       long double decimal_part = x - integer_part;
       if (decimal_part < 0.5) {
-        result = rounded_down;
-      } else {
         result = rounded_up;
+      } else {
+        result = rounded_down;
       }
     }
   }
