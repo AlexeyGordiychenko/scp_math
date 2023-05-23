@@ -51,7 +51,7 @@ long double s21_ceil(double x) {
     result = -0;
   } else if (x > 0 && x > integer_part && integer_part >= 0) {
     result = (long double)(integer_part + 1);
-  } else if (x < 0 && x < integer_part && x - integer_part >= 1) {
+  } else if (x < 0 && x < integer_part && integer_part - x<= 1) {
     result = (long double)integer_part;
   } else {
     result = x;
