@@ -75,7 +75,7 @@ long double s21_floor(double x) {
 }
 
 long double s21_pow(double base, double exp) {
-  long double result = 1.0;
+  long double result = 0.0;
   if (base == 1) {
     result = 1.0;
   } else if (exp == 0.0) {
@@ -108,19 +108,23 @@ long double s21_pow(double base, double exp) {
     }
   } else if (base == -1.0 && s21_isinf(exp)) {
     result = 1;
-  } else if (base < 0.0 && (long long)exp != exp && !s21_isnan(base)) {
+  } else if (base < 0.0 && (long long)exp != exp && !s21_isinf(base)) {
     result = s21_NAN;
   } else if (base == s21_INF && exp < 0.0) {
     result = 0.0;
   } else if (base == s21_INF && exp > 0.0) {
     result = s21_INF;
-  } else if (base == -s21_INF && s21_fmod(exp, 2) != 0.0 && exp < 0.0) {
+  } else if (base == -s21_INF && s21_fmod(exp, 2) != 0.0 && exp < 0.0 &&
+             (long long)exp == exp) {
     result = -0.0;
-  } else if (base == -s21_INF && s21_fmod(exp, 2) == 0.0 && exp < 0.0) {
+  } else if (base == -s21_INF && s21_fmod(exp, 2) == 0.0 && exp < 0.0 &&
+             (long long)exp == exp) {
     result = 0.0;
-  } else if (base == -s21_INF && s21_fmod(exp, 2) != 0.0 && exp > 0.0) {
+  } else if (base == -s21_INF && s21_fmod(exp, 2) != 0.0 && exp > 0.0 &&
+             (long long)exp == exp) {
     result = -s21_INF;
-  } else if (base == -s21_INF && s21_fmod(exp, 2) == 0.0 && exp > 0.0) {
+  } else if (base == -s21_INF && s21_fmod(exp, 2) == 0.0 && exp > 0.0 &&
+             (long long)exp == exp) {
     result = s21_INF;
   } else if (exp == -s21_INF && s21_fabs(base) < 1.0) {
     result = s21_INF;
@@ -130,11 +134,13 @@ long double s21_pow(double base, double exp) {
     result = 0.0;
   } else if (exp == s21_INF && s21_fabs(base) > 1.0) {
     result = s21_INF;
+  } else if (base == -s21_INF) {
+    result = s21_INF;
   } else if (base >= s21_DMAX) {
     result = -0.0;
   } else if (base <= s21_DMIN) {
     result = -0.0;
-  } else {
+  } else if (!s21_isinf(base) && !s21_isinf(exp)) {
     result = s21_exp(exp * s21_log(base));
   }
   return result;
@@ -272,3 +278,8 @@ long double s21_log(double x) {
 int s21_isinf(double x) { return s21_fabs(x) == s21_INF; }
 
 int s21_isnan(double x) { return x != x; }
+
+int main() {
+  printf("%Lf\n", s21_pow(-s21_INF, 2.718282));
+  return 0;
+}
