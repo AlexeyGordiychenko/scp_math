@@ -278,8 +278,3 @@ long double s21_log(double x) {
 int s21_isinf(double x) { return s21_fabs(x) == s21_INF; }
 
 int s21_isnan(double x) { return x != x; }
-
-int main() {
-  printf("%Lf\n", s21_pow(-s21_INF, 2.718282));
-  return 0;
-}
