@@ -152,18 +152,18 @@ long double s21_exp(double x) {
     result = 0.0;
   } else if (x == s21_INF) {
     result = s21_INF;
-  } else if (x > 709.7 || x < -709.7) {
-    result = +s21_INF;
   } else if (x == 1.0) {
     result = s21_E;
   } else if (x == 0.0) {
     result = 1.0;
   } else if (s21_isnan(x)) {
     result = s21_NAN;
+  } else if (x >= s21_DMAX) {
+    result = s21_INF;
   } else {
     long double term = 1.0;
     int n = 1;
-    while (s21_fabs(term) >= s21_EPSILON) {
+    while (s21_fabs(term) >= s21_EPSILON && result > 0.0 && result < s21_DMAX) {
       term *= (long double)((long double)x / n);
       result += term;
       n++;
