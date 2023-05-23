@@ -76,15 +76,7 @@ long double s21_floor(double x) {
     } else if (x < 0.0) {
       result = integer_part - 1.0;
     } else {
-      long double rounded_down = integer_part;
-      long double rounded_up = rounded_down + 1.0;
-
-      long double decimal_part = x - integer_part;
-      if (decimal_part <= 0.5) {
-        result = rounded_up;
-      } else {
-        result = rounded_down;
-      }
+      result = integer_part;
     }
   }
   return result;
