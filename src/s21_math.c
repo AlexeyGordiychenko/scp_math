@@ -149,7 +149,7 @@ long double s21_pow(double base, double exp) {
   } else if (base <= s21_DMIN) {
     result = -0.0;
   } else if (!s21_isinf(base) && !s21_isinf(exp)) {
-    result = s21_exp(exp * s21_log(base));
+    result = s21_exp(exp * s21_log(s21_fabs(base)));
   }
   return result;
 }
@@ -203,12 +203,20 @@ long double s21_sin(double x) {
 }
 
 long double s21_cos(double x) {
-  x = s21_fmod(s21_fabs(x), 2 * s21_PI);
-  int sign = 1;
-  if (x > s21_PI / 2 && x < 3 * s21_PI / 2) {
-    sign = -1;
+  int sign = 1.0;
+  if(x < 0){
+    sign = -1.0;
   }
-  return sign * s21_sqrt(1 - s21_pow(s21_sin(x), 2));
+  x = s21_fmod(x, 2.0 * s21_PI);
+  if (x > s21_PI / 2 && x < 3 * s21_PI / 2) {
+    sign = -1.0;
+  }
+  long double result = 0;
+  if(x  != s21_PI / 2 && x  != -s21_PI / 2){
+    result = sign * s21_sqrt(1.0 - s21_pow(s21_sin(x), 2.0));
+  }
+
+  return result;
 }
 
 long double s21_tan(double x) { return s21_sin(x) / s21_cos(x); }
