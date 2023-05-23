@@ -160,10 +160,12 @@ long double s21_exp(double x) {
     result = s21_NAN;
   } else if (x >= s21_DMAX) {
     result = s21_INF;
+  } else if (x <= s21_DMIN) {
+    result = 0.0;
   } else {
     long double term = 1.0;
     int n = 1;
-    while (s21_fabs(term) >= s21_EPSILON && result <= 100 && result < s21_DMAX) {
+    while (s21_fabs(term) >= s21_EPSILON && n <= 1000 && result < s21_DMAX) {
       term *= (long double)((long double)x / n);
       result += term;
       n++;
