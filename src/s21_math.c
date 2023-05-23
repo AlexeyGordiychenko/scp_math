@@ -71,17 +71,19 @@ long double s21_floor(double x) {
     result = -0.0;
   } else {
     long double integer_part = (long double)((long long)x);
-    if (integer_part == x || x < 0.0) {
-      result = integer_part - 1;
+    if (integer_part == x) {
+      result = integer_part;
+    } else if (x < 0.0) {
+      result = integer_part - 1.0;
     } else {
       long double rounded_down = integer_part;
       long double rounded_up = rounded_down + 1.0;
 
       long double decimal_part = x - integer_part;
-      if (decimal_part < 0.5) {
-        result = rounded_up;
-      } else {
+      if (decimal_part <= 0.5) {
         result = rounded_down;
+      } else {
+        result = rounded_up;
       }
     }
   }
@@ -220,19 +222,11 @@ long double s21_cos(double x) {
 long double s21_tan(double x) { return s21_sin(x) / s21_cos(x); }
 
 long double s21_fmod(double x, double y) {
-  long double result = 0;
-  if(s21_isnan(x) || s21_isnan(y) || s21_isinf(x) || y == 0){
+  long double result;
+  if (y == 0.0) {
     result = s21_NAN;
-  } 
-  else if (x == 0 && y != 0 && !s21_isnan(y)){
-    result = 0;
-  }
-  else if(x != s21_INF && x != -s21_INF && (y == s21_INF || y == -s21_INF)){
-    result = x;
-  }
-  else{
-    long long int q = x / y;
-    result = x - q * y;
+  } else {
+    result = x - (y * s21_floor(x / y));
   }
   return result;
 }
