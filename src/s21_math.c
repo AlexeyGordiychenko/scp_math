@@ -78,20 +78,58 @@ long double s21_pow(double base, double exp) {
   long double result = 1.0;
   if (base == 1) {
     result = 1.0;
-  } else if (s21_isnan(base)) {
-    result = s21_NAN;
   } else if (exp == 0.0) {
     result = 1.0;
+  } else if (s21_isnan(base)) {
+    result = s21_NAN;
   } else if (base == 0.0) {
-    result = 0.0;
-  } else if (base == +0 && (s21_fmod(exp, 2) != 0.0)) {
-    result = s21_INF;
-  } else if (base == -0 && s21_fmod(exp, 2) != 0) {
-    result = -s21_INF;
-  } else if (base == 0 && exp < 0.0 && s21_fmod(exp, 2) == 0) {
-    result = +s21_INF;
+    if (exp < 0.0 && s21_fmod(exp, 2) != 0.0 && (long long)exp == exp) {
+      result = s21_INF;
+    } else if (exp < 0.0 && s21_fmod(exp, 2) == 0.0 && (long long)exp == exp) {
+      result = s21_INF;
+    } else if (exp > 0.0 && (long long)exp == exp && s21_fmod(exp, 2) != 0.0) {
+      result = 0.0;
+    } else if (exp > 0.0 && (long long)exp == exp && s21_fmod(exp, 2) == 0.0) {
+      result = 0.0;
+    } else {
+      result = 0.0;
+    }
+  } else if (base == -0.0) {
+    if (exp < 0.0 && s21_fmod(exp, 2) != 0.0 && (long long)exp == exp) {
+      result = -s21_INF;
+    } else if (exp < 0.0 && s21_fmod(exp, 2) == 0.0 && (long long)exp == exp) {
+      result = s21_INF;
+    } else if (exp > 0.0 && (long long)exp == exp && s21_fmod(exp, 2) != 0.0) {
+      result = -0.0;
+    } else if (exp > 0.0 && (long long)exp == exp && s21_fmod(exp, 2) == 0.0) {
+      result = 0.0;
+    } else {
+      result = 0.0;
+    }
+  } else if (base == -1.0 && s21_isinf(exp)) {
+    result = 1;
   } else if (base < 0.0 && (long long)exp != exp) {
-    result = -s21_NAN;
+    result = s21_NAN;
+  } else if (base == s21_INF && exp < 0.0) {
+    result = 0.0;
+  } else if (base == s21_INF && exp > 0.0) {
+    result = s21_INF;
+  } else if (base == -s21_INF && s21_fmod(exp, 2) != 0.0 && exp < 0.0) {
+    result = -0.0;
+  } else if (base == -s21_INF && s21_fmod(exp, 2) == 0.0 && exp < 0.0) {
+    result = 0.0;
+  } else if (base == -s21_INF && s21_fmod(exp, 2) != 0.0 && exp > 0.0) {
+    result = -s21_INF;
+  } else if (base == -s21_INF && s21_fmod(exp, 2) == 0.0 && exp > 0.0) {
+    result = s21_INF;
+  } else if (exp == -s21_INF && s21_fabs(base) < 1.0) {
+    result = s21_INF;
+  } else if (exp == -s21_INF && s21_fabs(base) > 1.0) {
+    result = 0.0;
+  } else if (exp == s21_INF && s21_fabs(base) < 1.0) {
+    result = 0.0;
+  } else if (exp == s21_INF && s21_fabs(base) > 1.0) {
+    result = s21_INF;
   } else if (base >= s21_DMAX) {
     result = -0.0;
   } else if (base <= s21_DMIN) {
@@ -196,19 +234,17 @@ long double s21_acos(double x) {
   return res;
 }
 
-long double s21_atan(double x) { 
+long double s21_atan(double x) {
   long double result = 0;
-  if(x == -s21_INF){
+  if (x == -s21_INF) {
     result = -s21_PI / 2;
-  }
-  else if(x == s21_INF){
+  } else if (x == s21_INF) {
     result = s21_PI / 2;
-  }
-  else{
-    result = s21_asin(x / s21_sqrt(1.0 + x * x)); 
+  } else {
+    result = s21_asin(x / s21_sqrt(1.0 + x * x));
   }
   return result;
-  }
+}
 
 long double s21_log(double x) {
   long double result = 0.0;
