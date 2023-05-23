@@ -81,9 +81,9 @@ long double s21_floor(double x) {
 
       long double decimal_part = x - integer_part;
       if (decimal_part <= 0.5) {
-        result = rounded_down;
-      } else {
         result = rounded_up;
+      } else {
+        result = rounded_down;
       }
     }
   }
