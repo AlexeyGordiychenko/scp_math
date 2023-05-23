@@ -108,7 +108,7 @@ long double s21_pow(double base, double exp) {
     }
   } else if (base == -1.0 && s21_isinf(exp)) {
     result = 1;
-  } else if (base < 0.0 && (long long)exp != exp) {
+  } else if (base < 0.0 && (long long)exp != exp && !s21_isnan(base)) {
     result = s21_NAN;
   } else if (base == s21_INF && exp < 0.0) {
     result = 0.0;
