@@ -43,8 +43,6 @@ long double s21_ceil(double x) {
   long double result;
   if (x > 0 && x > integer_part) {
     result = (long double)(integer_part + 1);
-  } else if (x < 0 && x < integer_part) {
-    result = (long double)(integer_part - 1);
   } else {
     result = (long double)integer_part;
   }
@@ -163,7 +161,8 @@ long double s21_exp(double x) {
   } else {
     long double term = 1.0;
     int n = 1;
-    while (s21_fabs(term) >= s21_EPSILON && n <= 1000 && result < s21_DMAX && result >= s21_DMIN) {
+    while (s21_fabs(term) >= s21_EPSILON && n <= 1000 && result < s21_DMAX &&
+           result >= s21_DMIN) {
       term *= (long double)((long double)x / n);
       result += term;
       n++;
