@@ -39,7 +39,6 @@ long double s21_sqrt(double x) {
 }
 
 long double s21_ceil(double x) {
-  printf("%lf\n", x);
   long long integer_part = (long long)x;
   long double result;
   if (x > 0 && x > integer_part && integer_part > 0) {
