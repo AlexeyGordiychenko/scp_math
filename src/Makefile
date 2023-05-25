@@ -30,7 +30,8 @@ OBJS_DIR=obj
 
 LIB_SRCS=s21_math.c
 LIB_OBJS=$(patsubst %.c,$(OBJS_DIR)/%.o,$(LIB_SRCS))
-LIB=libs21_math.a
+LIB_NAME=s21_math.a
+LIB=lib$(LIB_NAME)
 
 TEST=test
 TEST_SRCS=test.c
@@ -38,7 +39,9 @@ TEST_SRCS=test.c
 GCOV_REPORT=gcov_report.html
 GCOV_DIR=gcov
 
-all: $(TEST)
+all: $(LIB_NAME)
+
+$(LIB_NAME): $(LIB)
 
 $(TEST): $(TEST_SRCS) $(LIB)
 	$(CC) $(CFLAGS) $^ $(LDFLAGS) -o $@ 
