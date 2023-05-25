@@ -238,9 +238,7 @@ long double s21_fmod(double x, double y) {
   } else if (x != s21_INF && x != -s21_INF && (y == s21_INF || y == -s21_INF)) {
     result = x;
   } else {
-    printf("=%lf\n", x);
     long long q = x / y;
-    printf("2=%ld\n", q);
     result = x - q * y;
   }
   return result;
