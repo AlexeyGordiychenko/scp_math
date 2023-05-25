@@ -73,10 +73,12 @@ long double s21_floor(double x) {
     long double integer_part = (long double)((long long)x);
     if (integer_part == x) {
       result = integer_part;
-    } else if (x < 0.0) {
+    } else if (x < 0.0 && s21_fabs(integer_part - x) <= 1) {
       result = integer_part - 1.0;
-    } else {
+    } else if (integer_part >= 0 || s21_fabs(integer_part - x) <= 1) {
       result = integer_part;
+    } else {
+      result = x;
     }
   }
   return result;
@@ -236,7 +238,9 @@ long double s21_fmod(double x, double y) {
   } else if (x != s21_INF && x != -s21_INF && (y == s21_INF || y == -s21_INF)) {
     result = x;
   } else {
-    long long int q = x / y;
+    printf("=%lf\n", x);
+    long long q = x / y;
+    printf("2=%ld\n", q);
     result = x - q * y;
   }
   return result;
