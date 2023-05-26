@@ -24,9 +24,9 @@
 
 CC=gcc
 CFLAGS=-Wall -Werror -Wextra -g
-LDFLAGS=-lcheck -pthread -lm
+LDFLAGS=-lcheck -pthread -lgcov -lm
 ifeq ($(shell uname), Linux)
-	LDFLAGS+=-lsubunit -lgcov
+	LDFLAGS+=-lsubunit
 endif
 
 GCOVFLAGS=--coverage
