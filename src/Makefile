@@ -19,36 +19,42 @@
 # The gcov report with additional files (*.css and details html) go to the gcov folder
 
 CC=gcc
-CFLAGS=-Wall -Werror -Wextra -g -fmax-errors=1
-LDFLAGS := -lcheck -pthread -lm
+CFLAGS=-Wall -Werror -Wextra -g
+LDFLAGS=-lcheck -pthread -lm
 ifeq ($(shell uname), Linux)
-	LDFLAGS += -lsubunit -lgcov
+	LDFLAGS+=-lsubunit -lgcov
 endif
 
 GCOVFLAGS=--coverage
 
 OBJS_DIR=obj
 
+GCOV_REPORT=gcov_report.html
+GCOV_DIR=gcov
+GCOV_OBJ_DIR=$(GCOV_DIR)/$(OBJS_DIR)
+
 LIB_SRCS=s21_math.c
 LIB_OBJS=$(patsubst %.c,$(OBJS_DIR)/%.o,$(LIB_SRCS))
+LIB_OBJS_GCOV=$(patsubst %.c,$(GCOV_OBJ_DIR)/%.o,$(LIB_SRCS))
 LIB=s21_math.a
 
 TEST=test
 TEST_SRCS=test.c
 
-GCOV_REPORT=gcov_report.html
-GCOV_DIR=gcov
-
 all: $(LIB)
 
-$(TEST): $(TEST_SRCS) $(LIB)
-	$(CC) $(CFLAGS) $^ $(LDFLAGS) -o $@ 
+$(TEST): $(TEST_SRCS) $(LIB_OBJS_GCOV)
+	$(CC) $(CFLAGS) $(TEST_SRCS) $(LIB_OBJS_GCOV) $(LDFLAGS) -o $@
 
 $(LIB): $(LIB_OBJS)
 	ar rcs $(LIB) -o $^
 
 $(OBJS_DIR)/%.o: %.c
 	mkdir -p $(OBJS_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(GCOV_OBJ_DIR)/%.o: %.c
+	mkdir -p $(GCOV_OBJ_DIR)
 	$(CC) $(CFLAGS) $(GCOVFLAGS) -c $< -o $@
 
 gcov_report: $(TEST)
@@ -56,7 +62,10 @@ gcov_report: $(TEST)
 #	> /dev/null 2>&1 to suppress all the stdout and stderr messages
 #	|| true to continue even if tests have failed cases
 	./test > /dev/null 2>&1 || true
-	gcovr --html --html-details -o $(GCOV_DIR)/$(GCOV_REPORT)
+	gcovr --html --html-details -o $(GCOV_DIR)/$(GCOV_REPORT) --filter $(LIB_SRCS)
+
+valgrind:
+	valgrind --leak-check=full --show-leak-kinds=all ./$(TEST)
 
 clean:
 	rm -rf $(OBJS_DIR)/* $(LIB) $(TEST) $(GCOV_DIR)/*
