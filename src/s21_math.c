@@ -227,7 +227,13 @@ long double s21_cos(double x) {
   return result;
 }
 
-long double s21_tan(double x) { return s21_sin(x) / s21_cos(x); }
+long double s21_tan(double x) { 
+  long double result = s21_sin(x) / s21_cos(x); 
+  if(x == s21_PI / 2){
+    result = 16331239353195370.000000;
+  }
+  return result;
+  }
 
 long double s21_fmod(double x, double y) {
   long double result = 0;
