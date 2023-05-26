@@ -1,21 +1,25 @@
 # This makefile will provide this folder structure after compiling:
 # .
 # ├── obj
-# │   ├── s21_math.gcda
-# │   ├── s21_math.gcno
 # │   └── s21_math.o
 # ├── gcov
 # │   ├── gcov_report.css
 # │   ├── gcov_report.html
 # │   └── gcov_report.s21_math.c.[hash].html
-# ├── libs21_math.a
+# │   └── obj
+# │       ├── s21_math.gcda
+# │       ├── s21_math.gcno
+# │       └── s21_math.o
+# ├── s21_math.a
 # ├── s21_math.c
 # ├── s21_math.h
 # ├── test.c
+# ├── test.h
 # ├── test
 # ├── Makefile
 #
-# All the object files (including *.gcno, *.gcda) go to the obj folder
+# All the object files for the lib go to the obj folder
+# All the object files for the ./test (including *.gcno, *.gcda) go to the gcov/obj folder
 # The gcov report with additional files (*.css and details html) go to the gcov folder
 
 CC=gcc
