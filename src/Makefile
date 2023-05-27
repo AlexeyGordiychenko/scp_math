@@ -51,7 +51,7 @@ $(TEST): $(TEST_SRCS) $(LIB_OBJS_GCOV)
 	$(CC) $(CFLAGS) $(TEST_SRCS) $(LIB_OBJS_GCOV) $(LDFLAGS) -o $@
 
 $(LIB): $(LIB_OBJS)
-	ar rcs $(LIB) -o $^
+	ar rcs $(LIB) $^
 
 $(OBJS_DIR)/%.o: %.c
 	mkdir -p $(OBJS_DIR)

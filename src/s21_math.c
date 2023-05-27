@@ -187,14 +187,13 @@ long double s21_exp(double x) {
 }
 
 long double s21_sin(double x) {
-  x = s21_fmod(x, 2.0 * s21_PI);  // Wrap x within the range of [-2π, 2π]
-
+  x = s21_fmod(x, 2.0 * s21_PI); 
   double result = 0.0;
   double term = x;
   double sign = 1.0;
   double factorial = 1.0;
 
-  for (int n = 1; n <= 20; n++) {
+  for (int n = 1; n <= 15; n++) {
     result += sign * term;
     term *= x * x / ((2 * n) * (2 * n + 1));
     sign *= -1.0;
@@ -207,16 +206,17 @@ long double s21_sin(double x) {
 long double s21_cos(double x) {
   long double result = 0;
   if (!s21_isnan(x) && !s21_isinf(x)) {
-    int sign = 1.0;
+    //int sign = 1.0;
     x = s21_fmod(x, 2.0 * s21_PI);
     if (x < 0) {
       x += 2 * s21_PI;
     }
-    if (x > s21_PI / 2 && x < 3 * s21_PI / 2) {
-      sign = -1.0;
-    }
+    // if (x > s21_PI / 2 && x < 3 * s21_PI / 2) {
+    //   sign = -1.0;
+    // }
     if (s21_fabs(s21_sin(x)) < 1) {
-      result = sign * s21_sqrt(1.0 - (s21_sin(x) * s21_sin(x)));
+      result = s21_sin((s21_PI / 2) - x);
+      //result = sign * s21_sqrt(1.0 - (s21_sin(x) * s21_sin(x)));
     }
   } else if (s21_isnan(x)) {
     result = s21_NAN;
