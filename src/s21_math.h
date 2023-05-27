@@ -50,8 +50,10 @@ long double s21_asin(double x);
 // Computes arc cosine
 long double s21_acos(double x);
 
+// Computes arc tangent
 long double s21_atan(double x);
 
+// Computes natural logarithm
 long double s21_log(double x);
 
 // Checks if x is infinite

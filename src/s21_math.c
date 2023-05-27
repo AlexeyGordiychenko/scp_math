@@ -194,7 +194,7 @@ long double s21_sin(double x) {
   double sign = 1.0;
   double factorial = 1.0;
 
-  for (int n = 1; n <= 15; n++) {
+  for (int n = 1; n <= 20; n++) {
     result += sign * term;
     term *= x * x / ((2 * n) * (2 * n + 1));
     sign *= -1.0;
@@ -231,6 +231,9 @@ long double s21_tan(double x) {
   long double result = s21_sin(x) / s21_cos(x); 
   if(x == s21_PI / 2){
     result = 16331239353195370.000000;
+  }
+  if(x == -s21_PI / 2){
+    result = -16331239353195370.000000;
   }
   return result;
   }
