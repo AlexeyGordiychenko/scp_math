@@ -228,12 +228,11 @@ long double s21_cos(double x) {
 }
 
 long double s21_tan(double x) {
-  long double result = s21_sin(x) / s21_cos(x);
-  if (x == s21_PI / 2) {
-    result = 16331239353195370.000000;
-  }
-  if (x == -s21_PI / 2) {
-    result = -16331239353195370.000000;
+  long double result = 0;
+  if (s21_fabs(x) == s21_PI_2) {
+    result = s21_TAN_PI_2 * ((x < 0) ? -1 : 1);
+  } else {
+    result = s21_sin(x) / s21_cos(x);
   }
   return result;
 }

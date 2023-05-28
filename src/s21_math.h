@@ -10,6 +10,7 @@
 #define s21_EPSILON (long double)1e-11
 #define s21_DMAX 1.7976931348623157E+308
 #define s21_DMIN -1.7976931348623157E+308
+#define s21_TAN_PI_2 16331239353195370.000000
 
 // Computes absolute value of an integer value
 int s21_abs(int x);
