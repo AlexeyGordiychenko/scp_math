@@ -33,7 +33,7 @@ GCOVFLAGS=--coverage
 
 OBJS_DIR=obj
 
-GCOV_REPORT=gcov_report.html
+GCOV_REPORT=gcov_report
 GCOV_DIR=gcov
 GCOV_OBJ_DIR=$(GCOV_DIR)/$(OBJS_DIR)
 
@@ -48,7 +48,7 @@ TEST_SRCS=test.c
 all: $(LIB)
 
 $(TEST): $(TEST_SRCS) $(LIB_OBJS_GCOV)
-	$(CC) $(CFLAGS) $(TEST_SRCS) $(LIB_OBJS_GCOV) $(LDFLAGS) -o $@
+	$(CC) $(CFLAGS) $^ $(LDFLAGS) -o $@
 
 $(LIB): $(LIB_OBJS)
 	ar rcs $(LIB) $^
@@ -61,12 +61,12 @@ $(GCOV_OBJ_DIR)/%.o: %.c
 	mkdir -p $(GCOV_OBJ_DIR)
 	$(CC) $(CFLAGS) $(GCOVFLAGS) -c $< -o $@
 
-gcov_report: $(TEST)
+$(GCOV_REPORT): $(TEST)
 	mkdir -p $(GCOV_DIR)
 #	> /dev/null 2>&1 to suppress all the stdout and stderr messages
 #	|| true to continue even if tests have failed cases
 	./test > /dev/null 2>&1 || true
-	gcovr --html --html-details -o $(GCOV_DIR)/$(GCOV_REPORT) --filter $(LIB_SRCS)
+	gcovr --html --html-details -o $(GCOV_DIR)/$(GCOV_REPORT).html --filter $(LIB_SRCS)
 
 valgrind:
 	valgrind --leak-check=full --show-leak-kinds=all ./$(TEST)
@@ -76,4 +76,4 @@ clean:
 
 rebuild: clean all
 
-.PHONY: all clean rebuild gcov_report
+.PHONY: all clean rebuild $(GCOV_REPORT) valgrind
