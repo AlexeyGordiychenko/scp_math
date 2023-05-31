@@ -34,10 +34,18 @@ END_TEST
 START_TEST(fmod_tests) { s21_generic_ld_2p_test(_i, s21_fmod, fmod); }
 END_TEST
 
+START_TEST(fmod_tests_extended) {
+  s21_generic_ld_2p_test_ext(_i, s21_fmod, fmod);
+}
+END_TEST
+
 START_TEST(log_tests) { s21_generic_ld_1p_test(_i, s21_log, log); }
 END_TEST
 
 START_TEST(pow_tests) { s21_generic_ld_2p_test(_i, s21_pow, pow); }
+END_TEST
+
+START_TEST(pow_tests_extended) { s21_generic_ld_2p_test_ext(_i, s21_pow, pow); }
 END_TEST
 
 START_TEST(sin_tests) { s21_generic_ld_1p_test(_i, s21_sin, sin); }
@@ -65,8 +73,10 @@ int main() {
       s21_generic_ts(fabs_tests, tc_double_len, S21_TITLE_FABS),
       s21_generic_ts(floor_tests, tc_double_len, S21_TITLE_FLOOR),
       s21_generic_ts(fmod_tests, tc_double_2p_len, S21_TITLE_FMOD),
+      s21_generic_ts(fmod_tests_extended, tc_double_len, S21_TITLE_FMOD_E),
       s21_generic_ts(log_tests, tc_double_len, S21_TITLE_LOG),
       s21_generic_ts(pow_tests, tc_double_2p_len, S21_TITLE_POW),
+      s21_generic_ts(pow_tests_extended, tc_double_len, S21_TITLE_POW_E),
       s21_generic_ts(sin_tests, tc_double_len, S21_TITLE_SIN),
       s21_generic_ts(sqrt_tests, tc_double_len, S21_TITLE_SQRT),
       s21_generic_ts(tan_tests, tc_double_len, S21_TITLE_TAN),
@@ -75,7 +85,7 @@ int main() {
   for (int i = 0; s21_math_tests[i] != NULL; i++) {
     SRunner *sr = srunner_create(s21_math_tests[i]);
 
-    srunner_set_fork_status(sr, CK_NOFORK);
+    // srunner_set_fork_status(sr, CK_NOFORK);
     srunner_run_all(sr, CK_NORMAL);
 
     failed += srunner_ntests_failed(sr);
@@ -132,4 +142,30 @@ void s21_generic_ld_2p_test(int idx, long double (*s21_func)(double, double),
   }
   ck_assert_msg(res, S21_ASSERT_LD_2P_FAIL, tc_double_2p[idx * 2],
                 tc_double_2p[idx * 2 + 1], a, b);
+}
+
+void s21_generic_ld_2p_test_ext(int idx,
+                                long double (*s21_func)(double, double),
+                                double (*std_func)(double, double)) {
+  int tc_double_len = sizeof(tc_double) / sizeof(tc_double[0]);
+
+  for (int i = 0; i < tc_double_len; i++) {
+    long double a = s21_func(tc_double[idx], tc_double[i]);
+    long double b = std_func(tc_double[idx], tc_double[i]);
+
+    int a_isnan = isnan(a);
+    int a_isinf = isinf(a);
+    int b_isnan = isnan(b);
+    int b_isinf = isinf(b);
+    int res;
+    if (a_isnan || b_isnan) {
+      res = a_isnan && b_isnan;
+    } else if (a_isinf || b_isinf) {
+      res = a_isinf && b_isinf;
+    } else {
+      res = fabsl(a - b) <= s21_TOLERANCE;
+    }
+    ck_assert_msg(res, S21_ASSERT_LD_2P_FAIL, tc_double[idx], tc_double[i], a,
+                  b);
+  }
 }

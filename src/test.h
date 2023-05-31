@@ -18,8 +18,10 @@
 #define S21_TITLE_FABS S21_TITLE "FABS" S21_CLR_NONE
 #define S21_TITLE_FLOOR S21_TITLE "FLOOR" S21_CLR_NONE
 #define S21_TITLE_FMOD S21_TITLE "FMOD" S21_CLR_NONE
+#define S21_TITLE_FMOD_E S21_TITLE "FMOD_EXTENDED" S21_CLR_NONE
 #define S21_TITLE_LOG S21_TITLE "LOG" S21_CLR_NONE
 #define S21_TITLE_POW S21_TITLE "POW" S21_CLR_NONE
+#define S21_TITLE_POW_E S21_TITLE "POW_EXTENDED" S21_CLR_NONE
 #define S21_TITLE_SIN S21_TITLE "SIN" S21_CLR_NONE
 #define S21_TITLE_SQRT S21_TITLE "SQRT" S21_CLR_NONE
 #define S21_TITLE_TAN S21_TITLE "TAN" S21_CLR_NONE
@@ -93,3 +95,6 @@ void s21_generic_ld_1p_test(int idx, long double (*s21_func)(double),
 
 void s21_generic_ld_2p_test(int idx, long double (*s21_func)(double, double),
                             double (*std_func)(double, double));
+void s21_generic_ld_2p_test_ext(int idx,
+                                long double (*s21_func)(double, double),
+                                double (*std_func)(double, double));
