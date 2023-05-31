@@ -7,43 +7,46 @@ START_TEST(abs_tests) {
 }
 END_TEST
 
-START_TEST(fabs_tests) { s21_generic_ld_1p_test(_i, s21_fabs, fabs); }
-END_TEST
-
-START_TEST(sqrt_tests) { s21_generic_ld_1p_test(_i, s21_sqrt, sqrt); }
-END_TEST
-
-START_TEST(pow_tests) { s21_generic_ld_2p_test(_i, s21_pow, pow); }
-END_TEST
-
-START_TEST(exp_tests) { s21_generic_ld_1p_test(_i, s21_exp, exp); }
-END_TEST
-
-START_TEST(ceil_tests) { s21_generic_ld_1p_test(_i, s21_ceil, ceil); }
-END_TEST
-
-START_TEST(floor_tests) { s21_generic_ld_1p_test(_i, s21_floor, floor); }
-END_TEST
-
-START_TEST(sin_tests) { s21_generic_ld_1p_test(_i, s21_sin, sin); }
-END_TEST
-
-START_TEST(cos_tests) { s21_generic_ld_1p_test(_i, s21_cos, cos); }
-END_TEST
-
-START_TEST(tan_tests) { s21_generic_ld_1p_test(_i, s21_tan, tan); }
-END_TEST
-
-START_TEST(fmod_tests) { s21_generic_ld_2p_test(_i, s21_fmod, fmod); }
+START_TEST(acos_tests) { s21_generic_ld_1p_test(_i, s21_acos, acos); }
 END_TEST
 
 START_TEST(asin_tests) { s21_generic_ld_1p_test(_i, s21_asin, asin); }
 END_TEST
 
-START_TEST(acos_tests) { s21_generic_ld_1p_test(_i, s21_acos, acos); }
+START_TEST(atan_tests) { s21_generic_ld_1p_test(_i, s21_atan, atan); }
 END_TEST
 
-START_TEST(atan_tests) { s21_generic_ld_1p_test(_i, s21_atan, atan); }
+START_TEST(ceil_tests) { s21_generic_ld_1p_test(_i, s21_ceil, ceil); }
+END_TEST
+
+START_TEST(cos_tests) { s21_generic_ld_1p_test(_i, s21_cos, cos); }
+END_TEST
+
+START_TEST(exp_tests) { s21_generic_ld_1p_test(_i, s21_exp, exp); }
+END_TEST
+
+START_TEST(fabs_tests) { s21_generic_ld_1p_test(_i, s21_fabs, fabs); }
+END_TEST
+
+START_TEST(floor_tests) { s21_generic_ld_1p_test(_i, s21_floor, floor); }
+END_TEST
+
+START_TEST(fmod_tests) { s21_generic_ld_2p_test(_i, s21_fmod, fmod); }
+END_TEST
+
+START_TEST(log_tests) { s21_generic_ld_1p_test(_i, s21_log, log); }
+END_TEST
+
+START_TEST(pow_tests) { s21_generic_ld_2p_test(_i, s21_pow, pow); }
+END_TEST
+
+START_TEST(sin_tests) { s21_generic_ld_1p_test(_i, s21_sin, sin); }
+END_TEST
+
+START_TEST(sqrt_tests) { s21_generic_ld_1p_test(_i, s21_sqrt, sqrt); }
+END_TEST
+
+START_TEST(tan_tests) { s21_generic_ld_1p_test(_i, s21_tan, tan); }
 END_TEST
 
 int main() {
@@ -53,19 +56,20 @@ int main() {
   int tc_double_2p_len = sizeof(tc_double_2p) / sizeof(tc_double_2p[0]) / 2;
   Suite *s21_math_tests[] = {
       s21_generic_ts(abs_tests, tc_int_len, S21_TITLE_ABS),
-      s21_generic_ts(fabs_tests, tc_double_len, S21_TITLE_FABS),
-      s21_generic_ts(sqrt_tests, tc_double_len, S21_TITLE_SQRT),
-      s21_generic_ts(pow_tests, tc_double_2p_len, S21_TITLE_POW),
-      s21_generic_ts(exp_tests, tc_double_len, S21_TITLE_EXP),
-      s21_generic_ts(ceil_tests, tc_double_len, S21_TITLE_CEIL),
-      s21_generic_ts(floor_tests, tc_double_len, S21_TITLE_FLOOR),
-      s21_generic_ts(sin_tests, tc_double_len, S21_TITLE_SIN),
-      s21_generic_ts(cos_tests, tc_double_len, S21_TITLE_COS),
-      s21_generic_ts(tan_tests, tc_double_len, S21_TITLE_TAN),
-      s21_generic_ts(fmod_tests, tc_double_2p_len, S21_TITLE_FMOD),
-      s21_generic_ts(asin_tests, tc_double_len, S21_TITLE_ASIN),
       s21_generic_ts(acos_tests, tc_double_len, S21_TITLE_ACOS),
+      s21_generic_ts(asin_tests, tc_double_len, S21_TITLE_ASIN),
       s21_generic_ts(atan_tests, tc_double_len, S21_TITLE_ATAN),
+      s21_generic_ts(ceil_tests, tc_double_len, S21_TITLE_CEIL),
+      s21_generic_ts(cos_tests, tc_double_len, S21_TITLE_COS),
+      s21_generic_ts(exp_tests, tc_double_len, S21_TITLE_EXP),
+      s21_generic_ts(fabs_tests, tc_double_len, S21_TITLE_FABS),
+      s21_generic_ts(floor_tests, tc_double_len, S21_TITLE_FLOOR),
+      s21_generic_ts(fmod_tests, tc_double_2p_len, S21_TITLE_FMOD),
+      s21_generic_ts(log_tests, tc_double_len, S21_TITLE_LOG),
+      s21_generic_ts(pow_tests, tc_double_2p_len, S21_TITLE_POW),
+      s21_generic_ts(sin_tests, tc_double_len, S21_TITLE_SIN),
+      s21_generic_ts(sqrt_tests, tc_double_len, S21_TITLE_SQRT),
+      s21_generic_ts(tan_tests, tc_double_len, S21_TITLE_TAN),
       NULL};
 
   for (int i = 0; s21_math_tests[i] != NULL; i++) {
