@@ -164,33 +164,28 @@ long double s21_pow(double base, double exp) {
 
 long double s21_exp(double x) {
   long double result = 1.0;
-  if (x == -s21_INF || x <= s21_DMIN + 1) {
+  if (x == -s21_INF || x <= s21_DMIN) {
     result = 0.0;
   } else if (x == s21_INF || x >= s21_DMAX) {
     result = s21_INF;
-  } else if (x == 1.0) {
-    result = s21_E;
-  } else if (x == 0.0) {
-    result = 1.0;
-  } else if (s21_isnan(x)) {
-    result = s21_NAN;
-  } else if (x <= s21_DMIN) {
-    result = 0.0;
+  } else if (x < 0.0) {
+    result = 1.0 / s21_exp(-x);
   } else {
     long double term = 1.0;
     int n = 1;
-    while (s21_fabs(term) >= s21_EPSILON && n <= 100000 && result < s21_DMAX &&
+
+    while (s21_fabs(term) > s21_EPSILON && n <= 10000000 && result < s21_DMAX &&
            result >= s21_DMIN) {
-      term *= (long double)((long double)x / n);
+      term *= (long double)(x / n);
       result += term;
       n++;
     }
-    if (n >= 100000) {
+
+    if (result < 0.0) {
+      result = 0.0;
+    } else if (n >= 10000000) {
       result = s21_INF;
     }
-  }
-  if (result < 0.0) {
-    result = 0.0;
   }
   return (double)result;
 }
@@ -300,9 +295,9 @@ long double s21_log(double x) {
         iterations++;
         long double error = s21_exp(guess) - x;
 
-        if (s21_fabs(error) < s21_EPSILON || iterations >= 1000000) {
+        if (s21_fabs(error) < s21_EPSILON || iterations >= 2000000) {
           result = guess;
-          if (iterations >= 1000000) {
+          if (iterations >= 2000000) {
             result = s21_INF;
           }
           break;
