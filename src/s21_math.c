@@ -298,9 +298,9 @@ long double s21_log(double x) {
         iterations++;
         long double error = s21_exp(guess) - x;
 
-        if (s21_fabs(error) < s21_EPSILON || iterations >= 10000000) {
+        if (s21_fabs(error) < s21_EPSILON || iterations >= 1000000) {
           result = guess;
-          if (iterations >= 10000000) {
+          if (iterations >= 1000000) {
             result = s21_INF;
           }
           break;
