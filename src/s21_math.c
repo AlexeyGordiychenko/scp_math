@@ -257,7 +257,9 @@ long double s21_asin(double x) {
   if (s21_fabs(x) < 1) {
     sum = t;
     x *= x;
-    for (int n = 1; s21_fabs(t) > s21_EPSILON; n += 2)
+    long iterations = 0;
+    for (int n = 1; s21_fabs(t) > s21_EPSILON && iterations <= 100000000;
+         n += 2, iterations++)
       sum += (t *= x * n / (n + 1)) / (n + 2);
   } else if (x == 1) {
     sum = s21_PI / 2;
