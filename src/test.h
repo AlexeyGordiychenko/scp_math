@@ -29,14 +29,14 @@
   "Failed: value = " S21_CLR_GRN "%d" S21_CLR_NONE                      \
   " Result: s21 = " S21_CLR_RED "%d" S21_CLR_NONE " std = " S21_CLR_RED \
   "%d" S21_CLR_NONE
-#define S21_ASSERT_LD_1P_FAIL                                            \
-  "Failed: value = " S21_CLR_GRN "%e" S21_CLR_NONE                       \
-  " Result: s21 = " S21_CLR_RED "%Le" S21_CLR_NONE " std = " S21_CLR_RED \
-  "%Le" S21_CLR_NONE
+#define S21_ASSERT_LD_1P_FAIL                                               \
+  "Failed: value = " S21_CLR_GRN "%e" S21_CLR_NONE                          \
+  " Result: s21 = " S21_CLR_RED "%.16Le" S21_CLR_NONE " std = " S21_CLR_RED \
+  "%.16Le" S21_CLR_NONE
 #define S21_ASSERT_LD_2P_FAIL                                                \
   "Failed: value1 = " S21_CLR_GRN "%e" S21_CLR_NONE " value2 = " S21_CLR_GRN \
-  "%e" S21_CLR_NONE " Result: s21 = " S21_CLR_RED "%Le" S21_CLR_NONE         \
-  " std = " S21_CLR_RED "%Le" S21_CLR_NONE
+  "%e" S21_CLR_NONE " Result: s21 = " S21_CLR_RED "%.16Le" S21_CLR_NONE      \
+  " std = " S21_CLR_RED "%.16Le" S21_CLR_NONE
 
 static const int tc_int[] = {-1,         1,      -21,     21,      123456789,
                              -123456789, 000123, -000123, INT_MIN, INT_MAX,
@@ -47,7 +47,8 @@ static const double tc_double[] = {
     M_PI_2, 9999999999.999999, -9999999999.999999, s21_NAN, s21_INF, -s21_INF,
     // additional
     M_LOG2E, M_LOG10E, M_LN2, M_LN10, M_PI_4, M_1_PI, M_2_PI, M_2_SQRTPI,
-    M_SQRT2, M_SQRT1_2, 1e-10, -1e-10, 1e10, -1e10, 1e20, -1e20, 1e-20, -1e-20};
+    M_SQRT2, M_SQRT1_2, 1e-10, -1e-10, 1e10, -1e10, 1e20, -1e20, 1e-20, -1e-20,
+    16, 145986, -153687.673452};
 static const double tc_double_2p[] = {
     1.0,      2.0,       // 0
     0.0,      0.0,       // 1
@@ -78,7 +79,8 @@ static const double tc_double_2p[] = {
     -s21_INF, -s21_INF,  // 26
     0,        M_E,       // 27
     125893,   125893,    //
-    -1,       3          //
+    -1,       3,         //
+    -15,      3,         //
 };
 
 // static const double tc_double[] = {
