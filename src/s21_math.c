@@ -120,6 +120,14 @@ long double s21_pow(double base, double exp) {
     }
   } else if (base == -1.0 && s21_isinf(exp)) {
     result = 1;
+  } else if (exp == -s21_INF && s21_fabs(base) < 1.0) {
+    result = s21_INF;
+  } else if (exp == -s21_INF && s21_fabs(base) > 1.0) {
+    result = 0.0;
+  } else if (exp == s21_INF && s21_fabs(base) < 1.0) {
+    result = 0.0;
+  } else if (exp == s21_INF && s21_fabs(base) > 1.0) {
+    result = s21_INF;
   } else if (base < 0.0 && (long long)exp != exp && !s21_isinf(base)) {
     result = s21_NAN;
   } else if (base == s21_INF && exp < 0.0) {
@@ -137,14 +145,6 @@ long double s21_pow(double base, double exp) {
     result = -s21_INF;
   } else if (base == -s21_INF && s21_fmod(exp, 2) == 0.0 && exp > 0.0 &&
              (long long)exp == exp) {
-    result = s21_INF;
-  } else if (exp == -s21_INF && s21_fabs(base) < 1.0) {
-    result = s21_INF;
-  } else if (exp == -s21_INF && s21_fabs(base) > 1.0) {
-    result = 0.0;
-  } else if (exp == s21_INF && s21_fabs(base) < 1.0) {
-    result = 0.0;
-  } else if (exp == s21_INF && s21_fabs(base) > 1.0) {
     result = s21_INF;
   } else if (base == -s21_INF) {
     result = s21_INF;
