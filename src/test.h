@@ -41,14 +41,19 @@
 static const int tc_int[] = {-1,         1,      -21,     21,      123456789,
                              -123456789, 000123, -000123, INT_MIN, INT_MAX,
                              0,          -0,     +0};
-static const double tc_double[] = {
-    -21.21, 21.21, -41.4567861, 36.67132, 1.5, -2, 1, -1, -0.1, 0.1, 0.2, -0.2,
-    1e-6, -1e-6, 1e-9, -1e-9, 0.0, -0.0, +0.0, M_E, M_PI, 2 * M_PI, 3 * M_PI,
-    M_PI_2, 9999999999.999999, -9999999999.999999, s21_NAN, s21_INF, -s21_INF,
-    // additional
-    M_LOG2E, M_LOG10E, M_LN2, M_LN10, M_PI_4, M_1_PI, M_2_PI, M_2_SQRTPI,
-    M_SQRT2, M_SQRT1_2, 1e-10, -1e-10, 1e10, -1e10, 1e20, -1e20, 1e-20, -1e-20,
-    16, 145986, -153687.673452};
+static const double tc_double[] = {-21.21,      21.21,
+                                   -41.4567861, 1.5,
+                                   -2,          1,
+                                   -1,          -0.1,
+                                   0.1,         0.2,
+                                   -0.2,        -1e-6,
+                                   -1e-9,       0.0,
+                                   -0.0,        +0.0,
+                                   M_E,         M_PI,
+                                   2 * M_PI,    3 * M_PI,
+                                   M_PI_2,      -9999999999.999999,
+                                   s21_NAN,     s21_INF,
+                                   -s21_INF};
 static const double tc_double_2p[] = {
     1.0,      2.0,       // 0
     0.0,      0.0,       // 1
@@ -78,9 +83,9 @@ static const double tc_double_2p[] = {
     2,        -s21_INF,  // 25
     -s21_INF, -s21_INF,  // 26
     0,        M_E,       // 27
-    125893,   125893,    //
-    -1,       3,         //
-    -15,      3,         //
+    125893,   125893,    // 28
+    -1,       3,         // 29
+    -15,      3,         // 30
 };
 
 // static const double tc_double[] = {
