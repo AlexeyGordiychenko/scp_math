@@ -1,4 +1,17 @@
-# s21_math (Group project)
+# s21_math (Group project, 3 members)
+
+## My part of the project
+My part was to make Makefile and tests for the whole project.
+
+So for my code you can check files
++ [test.c](src/test.c)
++ [test.h](src/test.h)
++ [Makefile](src/Makefile)
+
+## Score:
+The final score is 97% (max is 100%)
+
+Verter functional tests failed for the function s21_log.
 
 ## Task
 Development of basic mathematical operations
