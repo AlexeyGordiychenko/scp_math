@@ -1,18 +1,18 @@
 # This makefile will provide this folder structure after compiling:
 # .
 # ├── obj
-# │   └── s21_math.o
+# │   └── scp_math.o
 # ├── gcov
 # │   ├── gcov_report.css
 # │   ├── gcov_report.html
-# │   └── gcov_report.s21_math.c.[hash].html
+# │   └── gcov_report.scp_math.c.[hash].html
 # │   └── obj
-# │       ├── s21_math.gcda
-# │       ├── s21_math.gcno
-# │       └── s21_math.o
-# ├── s21_math.a
-# ├── s21_math.c
-# ├── s21_math.h
+# │       ├── scp_math.gcda
+# │       ├── scp_math.gcno
+# │       └── scp_math.o
+# ├── scp_math.a
+# ├── scp_math.c
+# ├── scp_math.h
 # ├── test.c
 # ├── test.h
 # ├── test
@@ -24,7 +24,7 @@
 
 CC=gcc
 CFLAGS=-Wall -Werror -Wextra -g
-LDFLAGS=-lcheck -pthread -lgcov -lm
+LDFLAGS=-lcheck -pthread -lgcov -lm -lrt
 ifeq ($(shell uname), Linux)
 	LDFLAGS+=-lsubunit
 endif
@@ -37,10 +37,10 @@ GCOV_REPORT=gcov_report
 GCOV_DIR=gcov
 GCOV_OBJ_DIR=$(GCOV_DIR)/$(OBJS_DIR)
 
-LIB_SRCS=s21_math.c
+LIB_SRCS=scp_math.c
 LIB_OBJS=$(patsubst %.c,$(OBJS_DIR)/%.o,$(LIB_SRCS))
 LIB_OBJS_GCOV=$(patsubst %.c,$(GCOV_OBJ_DIR)/%.o,$(LIB_SRCS))
-LIB=s21_math.a
+LIB=scp_math.a
 
 TEST=test
 TEST_SRCS=test.c
